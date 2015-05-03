@@ -5,12 +5,14 @@ project(h4r_pan_tilt_camera)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  h4r_libsersyncproto
   geometry_msgs
   roscpp
   sensor_msgs
   serial
   std_msgs
 )
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -96,6 +98,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  shared
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -105,16 +108,17 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(h4r_pan_tilt_camera_node src/h4r_pan_tilt_camera_node.cpp)
+add_executable(pan_tilt_node src/pan_tilt_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(h4r_pan_tilt_camera_node h4r_pan_tilt_camera_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(h4r_pan_tilt_camera_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(pan_tilt_node
+   ${h4r_libsersyncproto_LIBRARIES}
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -123,8 +127,9 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
+
+##TODO
+##Upload script for Arduino
 # install(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
