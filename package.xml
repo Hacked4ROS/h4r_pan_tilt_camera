@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <package>
-  <name>h4r_pan_tilt_camera</name>
+  <name>h4r_pan_tilt_adapter</name>
   <version>0.0.0</version>
-  <description>The h4r_pan_tilt_camera package</description>
+  <description>The h4r_pan_tilt_adapter package
+  	features a node to turn servos to add pan tilt functionality to any camera</description>
 
   <maintainer email="cyborgx1@gmail.com">Christian Holl</maintainer>
 
+  <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
@@ -14,6 +16,9 @@
   <build_depend>serial</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>h4r_libsersyncproto</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf2</build_depend>
+
   
   <run_depend>geometry_msgs</run_depend>
   <run_depend>roscpp</run_depend>
@@ -21,11 +26,9 @@
   <run_depend>serial</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>h4r_libsersyncproto</run_depend>
-
-
-  <!-- The export tag contains other, unspecified, tags -->
+  <run_depend>tf</run_depend>
+  <run_depend>tf2</run_depend> 
+  
   <export>
-    <!-- Other tools can request additional information be placed here -->
-
   </export>
 </package>
