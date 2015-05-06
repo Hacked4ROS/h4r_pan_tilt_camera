@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(h4r_pan_tilt_camera)
+project(h4r_pan_tilt_adapter)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   serial
   std_msgs
+  tf
+  tf2
 )
 
 
@@ -97,10 +99,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  shared
-  ${catkin_INCLUDE_DIRS}
-)
+#include_directories(
+#
+#)
 
 ## Declare a cpp library
 # add_library(h4r_pan_tilt_camera
@@ -110,9 +111,10 @@ include_directories(
 ## Declare a cpp executable
 add_executable(pan_tilt_node src/pan_tilt_node.cpp)
 
-## Add cmake target dependencies of the executable/library
-## as an example, message headers may need to be generated before nodes
-# add_dependencies(h4r_pan_tilt_camera_node h4r_pan_tilt_camera_generate_messages_cpp)
+target_include_directories(pan_tilt_node PRIVATE
+  shared
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(pan_tilt_node
