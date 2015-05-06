@@ -11,6 +11,8 @@
 #include <boost/thread/mutex.hpp>
 #include <geometry_msgs/Vector3.h>
 #include <sensor_msgs/Joy.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf/transform_datatypes.h>
 
 serial::Serial serial_interface;
 double base_width=0.44;
@@ -127,6 +129,37 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::NodeHandle nh("~");
   std::string port;
+  tf2_ros::TransformBroadcaster tf_broadcaster;
+
+  geometry_msgs::TransformStamped transform_pan, transform_tilt;
+  transform_pan.header.frame_id=nh.getNamespace()+"foot";
+  transform_tilt.header.frame_id=nh.getNamespace()+"pan";
+  transform_pan.child_frame_id=nh.getNamespace()+"pan";
+  transform_tilt.child_frame_id=nh.getNamespace()+"tilt";
+
+  transform_tilt.transform.rotation.w=1;
+  transform_tilt.transform.rotation.x=0;
+  transform_tilt.transform.rotation.y=0;
+  transform_tilt.transform.rotation.z=0;
+
+  transform_pan.transform.rotation.w=1;
+  transform_pan.transform.rotation.x=0;
+  transform_pan.transform.rotation.y=0;
+  transform_pan.transform.rotation.z=0;
+
+
+
+  transform_tilt.transform.translation.x=0;
+  transform_tilt.transform.translation.y=0;
+  transform_tilt.transform.translation.z=0;
+
+  transform_pan.transform.translation.x=0;
+  transform_pan.transform.translation.y=0;
+  transform_pan.transform.translation.z=0;
+
+
+  //TODO remove and use center transform...
+  transform_tilt.transform.translation.z=0.05;
 
   int srate;
 
@@ -183,10 +216,7 @@ int main(int argc, char **argv)
 
 	  mutex_targets.lock();
 
-		if(tilt_target>180.0)tilt_target=180;
-		if(tilt_target<0)tilt_target=0;
-		if(pan_target>180.0)pan_target=180;
-		if(pan_target<0)pan_target=0;
+
 
 
 	  if(pan!=pan_target)
@@ -200,7 +230,10 @@ int main(int argc, char **argv)
 			  pan--;
 		  }
 		  payloads.cam_pan=pan;
-		  sersyncproto_send(proto_data, CAM_TRANSMIT_PAN, (uint8_t*)&payloads, sendbyte);
+	      if(pan_target>180.0)pan_target=180;
+	      if(pan_target<0)pan_target=0;
+	      sersyncproto_send(proto_data, CAM_TRANSMIT_PAN, (uint8_t*)&payloads, sendbyte);
+		  transform_pan.transform.rotation=tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
 	  }
 
 	  if(tilt!=tilt_target)
@@ -214,8 +247,34 @@ int main(int argc, char **argv)
 			  tilt--;
 		  }
 		  payloads.cam_tilt=tilt;
+		  if(tilt_target>180.0)tilt_target=180;
+		  if(tilt_target<0)tilt_target=0;
 		  sersyncproto_send(proto_data, CAM_TRANSMIT_TILT, (uint8_t*)&payloads, sendbyte);
+
+		  transform_tilt.transform.rotation=tf::createQuaternionMsgFromRollPitchYaw(tilt*M_PI/180.0, 0, 0);
+
+		  //tf::QuaternicreateQuaternionFromRPY(double roll,double pitch,double yaw)
+
+
+
 	  }
+
+
+
+
+
+
+	  transform_pan.header.stamp=ros::Time::now();
+	  transform_tilt.header.stamp=ros::Time::now();
+
+	  tf_broadcaster.sendTransform(transform_pan);
+	  tf_broadcaster.sendTransform(transform_tilt);
+
+	  transform_pan.header.seq++;
+	  transform_tilt.header.seq++;
+
+
+
 	  mutex_targets.unlock();
 	  ros::spinOnce();
       servo_rate.sleep();
