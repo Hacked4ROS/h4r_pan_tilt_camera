@@ -10,6 +10,9 @@
 
 #define BAUD 9600
 
+#define RESET_PAN_VALUE 90
+#define RESET_TILT_VALUE 90
+
 typedef enum
 {
 	CAM_TRANSMIT_TILT,
@@ -28,8 +31,7 @@ typedef union
 										CAM_TRANSMIT_TILT,\
 										CAM_TRANSMIT_PAN,\
 										CAM_RESET,\
-									};
-
+									}
 #define PAYLOAD_LEN_ARRAY_INIT {1,1,0}
 
 #endif /* PROTOCOL_DEFINITION_H_ */
