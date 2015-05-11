@@ -1,6 +1,7 @@
 #ifndef PANTILTADAPTER_H_
 #define PANTILTADAPTER_H_
 
+#include <inttypes.h>
 #include <ros/ros.h>
 #include <string>
 #include <serial/serial.h>
@@ -23,9 +24,6 @@ private:
 	ros::Subscriber sub_quat;
 	tf2_ros::TransformBroadcaster tf_broadcaster;
 
-	uint8_t sersync_cmds[];
-	uint8_t sersync_header[];
-	uint8_t sersync_payload_lens[];
 
 	int tilt;
 	int pan;

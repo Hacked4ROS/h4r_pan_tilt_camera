@@ -14,6 +14,10 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
 
+
+#include <h4r_pan_tilt_adapter/PanTiltAdapter.h>
+
+
 serial::Serial serial_interface;
 double base_width=0.44;
 int max_speed=4000;
@@ -85,32 +89,32 @@ void workerButton()
 
 void JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 {
-	if(button_tilt_up >= 0 && button_pan_up >= 0
-	   &&button_tilt_down >= 0 && button_pan_up >= 0
-	   && button_tilt_up < msg->buttons.size()
-	   && button_tilt_down < msg->buttons.size()
-	   && button_pan_up < msg->buttons.size()
-	   && button_pan_down < msg->buttons.size())
-	{
-		mutex_buttons.lock();
-		button_pan_pressed_up=msg->buttons[button_pan_up];
-		button_pan_pressed_down=msg->buttons[button_pan_down];
-		button_tilt_pressed_up=msg->buttons[button_tilt_up];
-		button_tilt_pressed_down=msg->buttons[button_tilt_down];
-		mutex_buttons.unlock();
-	}
-	else if(axis_tilt >= 0 && axis_pan >= 0
-			&& axis_tilt < msg->axes.size()
-			&& axis_pan  < msg->axes.size())
-	{
-		mutex_targets.lock();
-		if(   axis_pan_last!=msg->axes[axis_pan]
-		   || axis_tilt_last!=msg->axes[axis_tilt]){
-			  pan_target=(msg->axes[axis_pan]+1.0)*90.0;
-			  tilt_target=(msg->axes[axis_tilt]+1.0)*90.0;
-		}
-		mutex_targets.unlock();
-	}
+//	if(button_tilt_up >= 0 && button_pan_up >= 0
+//	   &&button_tilt_down >= 0 && button_pan_up >= 0
+//	   && button_tilt_up < msg->buttons.size()
+//	   && button_tilt_down < msg->buttons.size()
+//	   && button_pan_up < msg->buttons.size()
+//	   && button_pan_down < msg->buttons.size())
+//	{
+//		mutex_buttons.lock();
+//		button_pan_pressed_up=msg->buttons[button_pan_up];
+//		button_pan_pressed_down=msg->buttons[button_pan_down];
+//		button_tilt_pressed_up=msg->buttons[button_tilt_up];
+//		button_tilt_pressed_down=msg->buttons[button_tilt_down];
+//		mutex_buttons.unlock();
+//	}
+//	else if(axis_tilt >= 0 && axis_pan >= 0
+//			&& axis_tilt < msg->axes.size()
+//			&& axis_pan  < msg->axes.size())
+//	{
+//		mutex_targets.lock();
+//		if(   axis_pan_last!=msg->axes[axis_pan]
+//		   || axis_tilt_last!=msg->axes[axis_tilt]){
+//			  pan_target=(msg->axes[axis_pan]+1.0)*90.0;
+//			  tilt_target=(msg->axes[axis_tilt]+1.0)*90.0;
+//		}
+//		mutex_targets.unlock();
+//	}
 }
 
 void VectorCallback(const geometry_msgs::Vector3::ConstPtr& msg)
@@ -122,7 +126,7 @@ void VectorCallback(const geometry_msgs::Vector3::ConstPtr& msg)
 }
 
 
-int main(int argc, char **argv)
+int maino(int argc, char **argv)
 {
 
   ros::init(argc, argv, "pan_tilt_node");
@@ -146,8 +150,6 @@ int main(int argc, char **argv)
   transform_pan.transform.rotation.x=0;
   transform_pan.transform.rotation.y=0;
   transform_pan.transform.rotation.z=0;
-
-
 
   transform_tilt.transform.translation.x=0;
   transform_tilt.transform.translation.y=0;
@@ -258,11 +260,6 @@ int main(int argc, char **argv)
 
 	  }
 
-
-
-
-
-
 	  transform_pan.header.stamp=ros::Time::now();
 	  transform_tilt.header.stamp=ros::Time::now();
 
@@ -272,14 +269,20 @@ int main(int argc, char **argv)
 	  transform_pan.header.seq++;
 	  transform_tilt.header.seq++;
 
-
-
 	  mutex_targets.unlock();
 	  ros::spinOnce();
       servo_rate.sleep();
-
   }
 
   ROS_INFO("Waiting for receive thread...");
   receive.join();
 }
+
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "pan_tilt_node");
+  pan_tilt_adapter::PanTiltAdapter node;
+  node.run();
+}
+
