@@ -4,9 +4,8 @@
  *  Created on: May 7, 2015
  *      Author: cyborg-x1
  */
-#include <h4r_pan_tilt_adapter/PanTiltAdapter.h>
-#include <cmath>
-#include <cfloat>
+#include "h4r_pan_tilt_adapter/PanTiltAdapter.h"
+
 
 static const uint8_t sersync_cmds[]=CMD_ARRAY_INIT;
 static const uint8_t sersync_header[]=HEADER_ARRAY_INIT;
@@ -99,39 +98,29 @@ void PanTiltAdapter::QuaternionCallback(const geometry_msgs::Quaternion::ConstPt
 		return;
 	}
 
-	if(pitch != 0)
-	{
-		ROS_WARN("Can not pitch, just pan(yaw)/tilt(roll)!");
-		return;
-	}
-
 	yaw*=180.0/M_PI;
 	roll*=180.0/M_PI;
-
-
-
-
 
 	if(yaw<0)
 	{
 		yaw=0;
-		ROS_WARN_ONCE("pan(yaw) < 0 degree assuming, 0 degree");
+		ROS_WARN("pan(yaw) < 0 degree assuming, 0 degree");
 	}
 	if(yaw>180)
 	{
 		yaw=180;
-		ROS_WARN_ONCE("pan(yaw) > 180 degree assuming 180 degree");
+		ROS_WARN("pan(yaw) > 180 degree assuming 180 degree");
 	}
 
 	if(roll<0)
 	{
 		roll=0;
-		ROS_WARN_ONCE("tilt(roll) < 0 degree assuming, 0 degree");
+		ROS_WARN("tilt(roll) < 0 degree assuming, 0 degree");
 	}
 	if(roll>180)
 	{
 		roll=180;
-		ROS_WARN_ONCE("tilt(roll) > 180 degree, assuming 180 degree");
+		ROS_WARN("tilt(roll) > 180 degree, assuming 180 degree");
 	}
 
 	pan_target=yaw;

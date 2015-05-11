@@ -10,7 +10,8 @@
 #include <geometry_msgs/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
-
+#include <cmath>
+#include <cfloat>
 #include "protocol_definition.h"
 
 namespace pan_tilt_adapter {
@@ -40,7 +41,6 @@ private:
 
 	geometry_msgs::TransformStamped tf_tilt;
 	geometry_msgs::TransformStamped tf_pan;
-
 
 	void sendbyte(uint8_t byte);
 	void QuaternionCallback(const geometry_msgs::Quaternion::ConstPtr& msg);
