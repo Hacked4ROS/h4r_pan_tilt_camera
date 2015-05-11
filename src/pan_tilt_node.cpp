@@ -41,7 +41,7 @@ bool button_pan_pressed_up=false,
 int axis_tilt_last=0,
 	axis_pan_last=0;
 
-int brate;
+int b_rate;
 
 sersyncproto_data_t *proto_data;
 
@@ -53,7 +53,7 @@ payload_t outputbuf;
 
 void workerButton()
 {
-	ros::Rate button_rate(brate);
+	ros::Rate button_rate(b_rate);
 	while(ros::ok())
 	{
 		mutex_buttons.lock();
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
   nh.param<int>("button_tilt_up", button_tilt_up, -1);
   nh.param<int>("button_tilt_down", button_tilt_down, -1);
   nh.param<int>("servo_rate", srate, 500);
-  nh.param<int>("button_rate",brate,100);
+  nh.param<int>("button_rate",b_rate,100);
 
   ros::Subscriber sub_deg = n.subscribe("deg", 1000, VectorCallback);
   ros::Subscriber sub_joy = nh.subscribe("joy", 1000, JoyCallback);
@@ -209,7 +209,6 @@ int main(int argc, char **argv)
 
 
   boost::thread receive(workerButton);
-  uint8_t d=0;
 
   while(ros::ok() && serial_interface.isOpen())
   {
