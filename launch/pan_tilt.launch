@@ -1,12 +1,12 @@
 <launch>
-		<node pkg="h4r_pan_tilt_adapter" name="pan_tilt_cam0" type="pan_tilt_node" output="screen">
-			<param name="axis_pan" value="0" />
-			<param name="axis_tilt" value="1" />
-			<param name="servo_rate" value="500"/> 
-		    <!-- servo_rate:500 on a USB 2.0 Port 
-		    otherwise the node could crash cause of too much current -->	
-			<remap from="~/joy" to="/joy"/>
-		</node>
+	<node pkg="h4r_pan_tilt_adapter" name="pan_tilt_cam0" type="pan_tilt_node" output="screen" required="true">
+		<param name="axis_pan" value="0" />
+		<param name="axis_tilt" value="1" />
+		<param name="servo_rate" value="500"/> 
+	    <!-- servo_rate:500 on a USB 2.0 Port 
+	    otherwise the node could crash cause of too much current -->	
+		<remap from="~/joy" to="/joy"/>
+	</node>
 	<node pkg="joy" name="joystick" type="joy_node" />
-	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pan_tilt_camera)/rviz/pan_tilt_view.rviz" />	
+	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pan_tilt_adapter)/rviz/pan_tilt_view.rviz" required="true" />	
 </launch>
