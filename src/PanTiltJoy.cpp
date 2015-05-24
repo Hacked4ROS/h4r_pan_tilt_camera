@@ -12,21 +12,31 @@ namespace pan_tilt_adapter {
 PanTiltJoy::PanTiltJoy()
 :n()
 ,nh("~")
-,sub_joy(n.subscribe("joy", 1000, &PanTiltJoy::JoyCallback, this ))
-//,pub_quat(n.advertise("cmd_dir",1000,1))
+,sub_joy(n.subscribe<sensor_msgs::Joy>("joy", 1000, &PanTiltJoy::JoyCallback, this ))
+,pub_quat(n.advertise<geometry_msgs::Quaternion>("cmd_dir",1000))
+,button_pan_down_pressed(false)
+,button_pan_up_pressed(false)
+,button_tilt_up_pressed(false)
+,button_tilt_down_pressed(false)
 {
-	nh.param<int>("loop_rate", loop_rate, 10);
+	nh.param<int>("loop_rate", loop_rate, 30);
 	nh.param<int>("axis_pan", axis_pan, -1);
 	nh.param<int>("axis_tilt", axis_tilt, -1);
 	nh.param<int>("button_pan_up", button_pan_up, -1);
 	nh.param<int>("button_pan_down", button_pan_down, -1);
 	nh.param<int>("button_tilt_up", button_tilt_up, -1);
 	nh.param<int>("button_tilt_down", button_tilt_down, -1);
-	nh.param<int>("button_rate",b_rate,100);
+	nh.param<int>("button_rate",b_rate,60);
+	nh.param<int>("pan_min",pan_min,0);
+	nh.param<int>("pan_max",pan_max,180);
+	nh.param<int>("tilt_min",tilt_min,0);
+	nh.param<int>("tilt_max",tilt_max,180);
+	nh.param<bool>("pan_invert",pan_invert,false);
+	nh.param<bool>("tilt_invert",tilt_invert,false);
+	nh.param<int>("pan_init",pan,90);
+	nh.param<int>("tilt_init",tilt,90);
 }
-PanTiltJoy::~PanTiltJoy() {
-	// TODO Auto-generated destructor stub
-}
+PanTiltJoy::~PanTiltJoy() {}
 
 void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 {
@@ -38,23 +48,33 @@ void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 		   && button_pan_down < msg->buttons.size())
 		{
 			mutex_buttons.lock();
-			button_pan_pressed_up=msg->buttons[button_pan_up];
-			button_pan_pressed_down=msg->buttons[button_pan_down];
-			button_tilt_pressed_up=msg->buttons[button_tilt_up];
-			button_tilt_pressed_down=msg->buttons[button_tilt_down];
+			button_pan_up_pressed=msg->buttons[button_pan_up];
+			button_pan_down_pressed=msg->buttons[button_pan_down];
+			button_tilt_up_pressed=msg->buttons[button_tilt_up];
+			button_tilt_down_pressed=msg->buttons[button_tilt_down];
 			mutex_buttons.unlock();
 		}
 		else if(axis_tilt >= 0 && axis_pan >= 0
 				&& axis_tilt < msg->axes.size()
 				&& axis_pan  < msg->axes.size())
 		{
-			mutex_targets.lock();
-			if(   axis_pan_last!=msg->axes[axis_pan]
-			   || axis_tilt_last!=msg->axes[axis_tilt]){
-				  //pan_target=(msg->axes[axis_pan]+1.0)*90.0;
-				  //tilt_target=(msg->axes[axis_tilt]+1.0)*90.0;
-			}
-			mutex_targets.unlock();
+			mutexPanTilt.lock();
+				double p=msg->axes[axis_pan];
+				double t=msg->axes[axis_tilt];
+
+				if(pan_invert)p*=-1;
+				if(tilt_invert)t*=-1;
+
+				pan=(p+1.0)*90.0;
+				tilt=(t+1.0)*90.0;
+
+				publish();
+			mutexPanTilt.unlock();
+		}
+		else
+		{
+			ROS_ERROR("Setting for joystick control of pan tilt joy node not accepted!");
+			exit(1);
 		}
 }
 
@@ -68,48 +88,50 @@ void PanTiltJoy::workerButton()
 	while(ros::ok())
 	{
 		mutex_buttons.lock();
-		mutex_targets.lock();
-		if(button_tilt_pressed_up)
+		mutexPanTilt.lock();
+		if(button_tilt_up_pressed)
 		{
-			//tilt_target++;
+			if(tilt<180) tilt++;
 		}
 
-		if(button_tilt_pressed_down)
+		if(button_tilt_down_pressed)
 		{
-			//tilt_target--;
+			if(tilt>0) tilt--;
 		}
 
-		if(button_pan_pressed_up)
+		if(button_pan_up_pressed)
 		{
-			//pan_target++;
+			if(pan<180) pan++;
 		}
 
-		if(button_pan_pressed_down)
+		if(button_pan_down_pressed)
 		{
-			//pan_target--;
+			if(pan>0) pan--;
 		}
-        mutex_targets.unlock();
-		mutex_buttons.unlock();
+		publish();
+        mutexPanTilt.unlock();
+        mutex_buttons.unlock();
 		button_rate.sleep();
 	}
 }
 
-
+void PanTiltJoy::publish()
+{
+	geometry_msgs::Quaternion q;
+	tf::quaternionTFToMsg(tf::createQuaternionFromRPY(tilt/180.0*M_PI,0,pan/180.0*M_PI),q);
+	pub_quat.publish(q);
+}
 
 void PanTiltJoy::run()
 {
-	ros::Rate lrate(loop_rate);
-
-	boost::thread receive(boost::bind(&PanTiltJoy::workerButton,this));
-
-	geometry_msgs::Quaternion q;
-
-	while(ros::ok())
+	boost::thread receive;
+	if(button_tilt_up >= 0 && button_pan_up >= 0
+	   &&button_tilt_down >= 0 && button_pan_up >= 0)
 	{
-		pub_quat.publish(q);
-		ros::spinOnce();
-		lrate.sleep();
+		receive=boost::thread(boost::bind(&PanTiltJoy::workerButton,this));
 	}
+	ros::spin();
+	receive.join();
 }
 
 

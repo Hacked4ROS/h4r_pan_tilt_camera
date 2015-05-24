@@ -6,6 +6,7 @@
 #include <sensor_msgs/Joy.h>
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
+#include <tf/tf.h>
 
 namespace pan_tilt_adapter {
 
@@ -23,11 +24,8 @@ private:
 	bool pan_invert;
 	bool tilt_invert;
 
-	bool pan_min;
-	bool pan_max;
-
-	bool tilt_min;
-	bool tilt_max;
+	int pan_min, pan_max;
+	int tilt_min, tilt_max;
 
 
 	int tilt, pan;
@@ -40,21 +38,19 @@ private:
 	    button_tilt_up,
 		button_tilt_down;
 
-	bool button_pan_pressed_up,
-		 button_pan_pressed_down,
-	     button_tilt_pressed_up,
-		 button_tilt_pressed_down;
-
-	int axis_tilt_last,
-		axis_pan_last;
+	bool button_pan_up_pressed,
+		 button_pan_down_pressed,
+	     button_tilt_up_pressed,
+		 button_tilt_down_pressed;
 
 	int b_rate;
 
-	boost::mutex mutex_targets, mutex_buttons;
+	boost::mutex mutexPanTilt, mutex_buttons;
 
 
 	void workerButton();
 	void JoyCallback(const sensor_msgs::Joy::ConstPtr& msg);
+	void publish();
 
 public:
 	PanTiltJoy();
