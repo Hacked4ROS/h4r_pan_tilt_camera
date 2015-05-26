@@ -30,18 +30,22 @@ private:
 
 	int tilt, pan;
 
+	int tilt_home, pan_home;
+
 	int axis_pan,
 		axis_tilt;
 
 	int button_pan_up,
 	    button_pan_down,
 	    button_tilt_up,
-		button_tilt_down;
+		button_tilt_down,
+		button_reset;
 
 	bool button_pan_up_pressed,
 		 button_pan_down_pressed,
 	     button_tilt_up_pressed,
-		 button_tilt_down_pressed;
+		 button_tilt_down_pressed,
+		 button_reset_pressed;
 
 	int b_rate;
 

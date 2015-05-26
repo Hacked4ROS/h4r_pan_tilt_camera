@@ -18,6 +18,7 @@ PanTiltJoy::PanTiltJoy()
 ,button_pan_up_pressed(false)
 ,button_tilt_up_pressed(false)
 ,button_tilt_down_pressed(false)
+,button_reset_pressed(false)
 {
 	nh.param<int>("loop_rate", loop_rate, 30);
 	nh.param<int>("axis_pan", axis_pan, -1);
@@ -26,15 +27,21 @@ PanTiltJoy::PanTiltJoy()
 	nh.param<int>("button_pan_down", button_pan_down, -1);
 	nh.param<int>("button_tilt_up", button_tilt_up, -1);
 	nh.param<int>("button_tilt_down", button_tilt_down, -1);
+	nh.param<int>("button_reset",button_reset,-1);
+
 	nh.param<int>("button_rate",b_rate,60);
+
 	nh.param<int>("pan_min",pan_min,0);
 	nh.param<int>("pan_max",pan_max,180);
 	nh.param<int>("tilt_min",tilt_min,0);
 	nh.param<int>("tilt_max",tilt_max,180);
 	nh.param<bool>("pan_invert",pan_invert,false);
 	nh.param<bool>("tilt_invert",tilt_invert,false);
-	nh.param<int>("pan_init",pan,90);
-	nh.param<int>("tilt_init",tilt,90);
+	nh.param<int>("pan_home",pan_home,90);
+	nh.param<int>("tilt_home",tilt_home,90);
+
+	pan=pan_home;
+	tilt=tilt_home;
 }
 PanTiltJoy::~PanTiltJoy() {}
 
@@ -52,6 +59,8 @@ void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 			button_pan_down_pressed=msg->buttons[button_pan_down];
 			button_tilt_up_pressed=msg->buttons[button_tilt_up];
 			button_tilt_down_pressed=msg->buttons[button_tilt_down];
+			if(button_reset>=0 && button_reset<msg->buttons.size())
+				button_reset_pressed=msg->buttons[button_reset];
 			mutex_buttons.unlock();
 		}
 		else if(axis_tilt >= 0 && axis_pan >= 0
@@ -62,8 +71,8 @@ void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 				double p=msg->axes[axis_pan];
 				double t=msg->axes[axis_tilt];
 
-				if(pan_invert)p*=-1;
-				if(tilt_invert)t*=-1;
+				if(pan_invert)p*=-1.0;
+				if(tilt_invert)t*=-1.0;
 
 				pan=(p+1.0)*90.0;
 				tilt=(t+1.0)*90.0;
@@ -108,6 +117,13 @@ void PanTiltJoy::workerButton()
 		{
 			if(pan>0) pan--;
 		}
+
+		if(button_reset_pressed)
+		{
+			pan=pan_home;
+			tilt=tilt_home;
+		}
+
 		publish();
         mutexPanTilt.unlock();
         mutex_buttons.unlock();
