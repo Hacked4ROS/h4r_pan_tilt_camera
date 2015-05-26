@@ -51,8 +51,18 @@ timeout(serial::Timeout::simpleTimeout(1000))
 		ns.erase(ns.begin());
 	}
 
-	tf_pan.header.frame_id=ns+"pan";
-	tf_tilt.header.frame_id=ns+"tilt";
+
+
+	tf_pan.header.stamp=ros::Time::now();
+	tf_tilt.header.stamp=ros::Time::now();
+
+
+	tf_pan.header.frame_id=ns+"_pan";
+	tf_tilt.header.frame_id=ns+"_tilt";
+
+	tf_tilt.child_frame_id=ns+"_pan";
+	tf_pan.child_frame_id=ns+"_foot";
+
 
     tf_pan.transform.rotation=
     		tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
@@ -92,14 +102,16 @@ void PanTiltAdapter::QuaternionCallback(const geometry_msgs::Quaternion::ConstPt
 	tf::Matrix3x3(q).getRPY(roll, pitch, yaw);
 
 
+
 	if(isnan(roll) || isnan(yaw) || isnan(pitch))
 	{
 		ROS_WARN("roll, pitch or yaw not a number, ignore!");
 		return;
 	}
 
-	yaw*=180.0/M_PI;
-	roll*=180.0/M_PI;
+	yaw=yaw*180.0/M_PI;
+	roll=roll*180.0/M_PI;
+
 
 	if(yaw<0)
 	{
@@ -162,8 +174,6 @@ void PanTiltAdapter::run()
 				  	  	  	CAM_TRANSMIT_PAN,
 							(uint8_t*)&payloads,
 							f2);
-		  tf_pan.transform.rotation=
-				  tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
 		}
 
 		if(tilt!=tilt_target)
@@ -183,10 +193,12 @@ void PanTiltAdapter::run()
 				            CAM_TRANSMIT_TILT,
 							(uint8_t*)&payloads,
 							boost::bind(&PanTiltAdapter::sendbyte, this, _1));
-		  tf_tilt.transform.rotation=
-				  tf::createQuaternionMsgFromRollPitchYaw(tilt*M_PI/180.0, 0, 0);
 		}
 
+		tf_pan.transform.rotation=
+			  tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
+		tf_tilt.transform.rotation=
+			  tf::createQuaternionMsgFromRollPitchYaw(tilt*M_PI/180.0, 0, 0);
 
 		//TF output
 		tf_pan.header.stamp=ros::Time::now();
