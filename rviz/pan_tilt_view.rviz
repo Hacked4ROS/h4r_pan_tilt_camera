@@ -6,8 +6,14 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-      Splitter Ratio: 0.5
-    Tree Height: 546
+        - /RobotModel1
+        - /TF1
+        - /TF1/Frames1
+        - /TF1/Tree1
+        - /TF1/Tree1/pantilt_base_link1
+        - /TF1/Tree1/pantilt_base_link1/pantilt_center_link1
+      Splitter Ratio: 0.303618
+    Tree Height: 729
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -48,16 +54,47 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        pantilt_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pantilt_center_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pantilt_top_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        pan_tilt_cam0foot:
+        pantilt_base_link:
           Value: true
-        pan_tilt_cam0pan:
+        pantilt_center_link:
           Value: true
-        pan_tilt_cam0tilt:
+        pantilt_top_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -65,16 +102,16 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        pan_tilt_cam0foot:
-          pan_tilt_cam0pan:
-            pan_tilt_cam0tilt:
+        pantilt_base_link:
+          pantilt_center_link:
+            pantilt_top_link:
               {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: pan_tilt_cam0foot
+    Fixed Frame: pantilt_base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -94,31 +131,31 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 1.09678
+      Class: rviz/XYOrbit
+      Distance: 0.390572
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.130935
+        Y: 0.748556
+        Z: 2.90573e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.700398
+      Pitch: 0.150398
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 0.975397
+      Value: XYOrbit (rviz)
+      Yaw: 1.14858
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 846
+  Height: 1029
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000013c000002b1fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006901000005fb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000037000002b1000000dc01000005fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b1fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000037000002b1000000b301000005fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b000000042fc0100000002fb0000000800540069006d00650100000000000004b00000030901000005fb0000000800540069006d006501000000000000045000000000000000000000025f000002b100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000031200000368fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006901000005fb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003700000368000000dc01000005fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000368fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003700000368000000b301000005fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000078000000042fc0100000002fb0000000800540069006d00650100000000000007800000030901000005fb0000000800540069006d00650100000000000004500000000000000000000003590000036800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -127,6 +164,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1200
-  X: 60
-  Y: 60
+  Width: 1920
+  X: -2
+  Y: -3
