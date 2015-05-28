@@ -14,13 +14,13 @@ static const uint8_t sersync_payload_lens[]=PAYLOAD_LEN_ARRAY_INIT;
 namespace pan_tilt_adapter {
 
 PanTiltAdapter::PanTiltAdapter()
-:n(),
-nh("~"),
-sub_quat(n.subscribe("cmd_dir", 1000, &PanTiltAdapter::QuaternionCallback, this )),
-tf_broadcaster(),
-tilt(RESET_PAN_VALUE),
-pan(RESET_TILT_VALUE),
-timeout(serial::Timeout::simpleTimeout(1000))
+:n()
+,nh("~")
+,sub_quat(n.subscribe("cmd_dir", 1000, &PanTiltAdapter::QuaternionCallback, this ))
+,pub_joint(n.advertise<sensor_msgs::JointState>("joint_states",1000))
+,tilt(RESET_PAN_VALUE)
+,pan(RESET_TILT_VALUE)
+,timeout(serial::Timeout::simpleTimeout(1000))
 {
 	nh.param<string>("interface",port,"/dev/ttyACM0");
 	nh.param<int>("servo_rate", servo_rate, 500);
@@ -52,22 +52,15 @@ timeout(serial::Timeout::simpleTimeout(1000))
 	}
 
 
+  	joint_state.header.stamp = ros::Time::now();
+  	joint_state.name.resize(2);
+  	joint_state.position.resize(2);
 
-	tf_pan.header.stamp=ros::Time::now();
-	tf_tilt.header.stamp=ros::Time::now();
+  	joint_state.name[0] = "pantilt_pan_joint";
+  	joint_state.position[0] = pan_target;
 
-
-	tf_pan.header.frame_id=ns+"_pan";
-	tf_tilt.header.frame_id=ns+"_tilt";
-
-	tf_tilt.child_frame_id=ns+"_pan";
-	tf_pan.child_frame_id=ns+"_foot";
-
-
-    tf_pan.transform.rotation=
-    		tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
-	tf_tilt.transform.rotation=
-			tf::createQuaternionMsgFromRollPitchYaw(tilt*M_PI/180.0, 0, 0);
+  	joint_state.name[1] = "pantilt_tilt_joint";
+  	joint_state.position[1] = tilt_target;
 
 	//Open Serial interface
 	serial_interface.setBaudrate(BAUD);
@@ -195,18 +188,11 @@ void PanTiltAdapter::run()
 							boost::bind(&PanTiltAdapter::sendbyte, this, _1));
 		}
 
-		tf_pan.transform.rotation=
-			  tf::createQuaternionMsgFromRollPitchYaw(0, 0, pan*M_PI/180.0);
-		tf_tilt.transform.rotation=
-			  tf::createQuaternionMsgFromRollPitchYaw(tilt*M_PI/180.0, 0, 0);
+	  	joint_state.position[0] = pan*M_PI/180.0;
+	  	joint_state.position[1] = tilt*M_PI/180.0;
+	  	joint_state.header.stamp= ros::Time::now();
 
-		//TF output
-		tf_pan.header.stamp=ros::Time::now();
-		tf_tilt.header.stamp=ros::Time::now();
-		tf_broadcaster.sendTransform(tf_pan);
-		tf_broadcaster.sendTransform(tf_tilt);
-		tf_pan.header.seq++;
-		tf_tilt.header.seq++;
+	  	pub_joint.publish(joint_state);
 
 		ros::spinOnce();
 		rate.sleep();

@@ -8,10 +8,10 @@
 #include <sersyncproto.h>
 #include <boost/bind.hpp>
 #include <geometry_msgs/Quaternion.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf/transform_datatypes.h>
+#include <sensor_msgs/JointState.h>
 #include <cmath>
 #include <cfloat>
+#include <tf/tf.h>
 #include "protocol_definition.h"
 
 namespace pan_tilt_adapter {
@@ -23,8 +23,7 @@ private:
 	ros::NodeHandle n;
 	ros::NodeHandle nh;
 	ros::Subscriber sub_quat;
-	tf2_ros::TransformBroadcaster tf_broadcaster;
-
+	ros::Publisher pub_joint;
 
 	int tilt;
 	int pan;
@@ -39,8 +38,10 @@ private:
 	int tilt_target,
 		pan_target;
 
-	geometry_msgs::TransformStamped tf_tilt;
-	geometry_msgs::TransformStamped tf_pan;
+
+
+    sensor_msgs::JointState joint_state;
+
 
 	void sendbyte(uint8_t byte);
 	void QuaternionCallback(const geometry_msgs::Quaternion::ConstPtr& msg);
