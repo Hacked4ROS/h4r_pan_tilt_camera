@@ -35,17 +35,24 @@ private:
 	int axis_pan,
 		axis_tilt;
 
+	bool is_button_axis;
+
 	int button_pan_up,
 	    button_pan_down,
 	    button_tilt_up,
 		button_tilt_down,
-		button_reset;
+		button_reset_lock;
+
 
 	bool button_pan_up_pressed,
 		 button_pan_down_pressed,
 	     button_tilt_up_pressed,
 		 button_tilt_down_pressed,
 		 button_reset_pressed;
+
+	bool lock_is_switch;
+	bool locked;
+	bool toggle_switch;
 
 	int b_rate;
 
