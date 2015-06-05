@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>h4r_pan_tilt_adapter</name>
+  <name>h4r_pantilt_adapter</name>
   <version>0.0.0</version>
-  <description>The h4r_pan_tilt_adapter package
+  <description>The h4r_pantilt_adapter package
   	features a node to turn servos to add pan tilt functionality to any camera</description>
 
   <maintainer email="cyborgx1@gmail.com">Christian Holl</maintainer>

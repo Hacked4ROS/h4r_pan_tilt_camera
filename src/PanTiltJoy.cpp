@@ -5,7 +5,7 @@
  *      Author: cyborg-x1
  */
 
-#include "h4r_pan_tilt_adapter/PanTiltJoy.h"
+#include "h4r_pantilt_adapter/PanTiltJoy.h"
 
 namespace pan_tilt_adapter {
 

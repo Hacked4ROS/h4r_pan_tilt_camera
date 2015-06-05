@@ -1,7 +1,7 @@
 <launch>
 	<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
 	<param name="robot_description"  command=
-	"$(find xacro)/xacro.py $(find h4r_pan_tilt_adapter)/urdf/pan_tilt_adapter.xacro" />
+	"$(find xacro)/xacro.py $(find h4r_pantilt_adapter)/urdf/pan_tilt_adapter.xacro" />
 
 	<node pkg="robot_state_publisher" type="state_publisher" 
 		  name="robot_state_publisher">

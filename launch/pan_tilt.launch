@@ -1,10 +1,10 @@
 <launch>
 	
-	<node pkg="h4r_pan_tilt_adapter" name="pan_tilt_cam0_adapter" type="pan_tilt_adapter_node" output="screen" required="true">
+	<node pkg="h4r_pantilt_adapter" name="pan_tilt_cam0_adapter" type="pan_tilt_adapter_node" output="screen" required="true">
 		<param name="servo_rate" value="500"/> 
 	</node>
 	
-	<node pkg="h4r_pan_tilt_adapter" name="pan_tilt_cam0_joy" type="pan_tilt_joy_node" output="screen" required="true">
+	<node pkg="h4r_pantilt_adapter" name="pan_tilt_cam0_joy" type="pan_tilt_joy_node" output="screen" required="true">
 		<param name="axis_pan" value="0" />
 		<param name="axis_tilt" value="1" />
 		<param name="is_button_axis" value="false" />		
@@ -22,10 +22,10 @@
 	</node>
 		
 	<node pkg="joy" name="joystick" type="joy_node" />
-	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pan_tilt_adapter)/rviz/pan_tilt_view.rviz" required="true" />	
+	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_adapter)/rviz/pan_tilt_view.rviz" required="true" />	
 
 		<param name="robot_description"  command=
-	"$(find xacro)/xacro.py $(find h4r_pan_tilt_adapter)/urdf/pan_tilt_adapter.xacro" />
+	"$(find xacro)/xacro.py $(find h4r_pantilt_adapter)/urdf/pan_tilt_adapter.xacro" />
 		
 	<node pkg="robot_state_publisher" type="state_publisher" 
 		  name="robot_state_publisher">

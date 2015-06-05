@@ -1,4 +1,4 @@
-#include "h4r_pan_tilt_adapter/PanTiltJoy.h"
+#include "h4r_pantilt_adapter/PanTiltJoy.h"
 
 int main(int argc, char **argv)
 {

@@ -71,4 +71,4 @@ public:
 
 } /* namespace pan_tilt_adapter */
 
-#endif /* H4R_PAN_TILT_ADAPTER_SRC_PANTILTJOY_H_ */
+#endif /* h4r_pantilt_adapter_SRC_PANTILTJOY_H_ */

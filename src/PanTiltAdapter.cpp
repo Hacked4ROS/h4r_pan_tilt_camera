@@ -4,7 +4,7 @@
  *  Created on: May 7, 2015
  *      Author: cyborg-x1
  */
-#include "h4r_pan_tilt_adapter/PanTiltAdapter.h"
+#include "h4r_pantilt_adapter/PanTiltAdapter.h"
 
 
 static const uint8_t sersync_cmds[]=CMD_ARRAY_INIT;

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(h4r_pan_tilt_adapter)
+project(h4r_pantilt_adapter)
 
 find_package(catkin REQUIRED COMPONENTS
   h4r_libsersyncproto
@@ -24,16 +24,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(pan_tilt_adapter_node src/pan_tilt_adapter_node.cpp src/PanTiltAdapter.cpp)
-add_executable(pan_tilt_joy_node src/pan_tilt_joy_node.cpp src/PanTiltJoy.cpp)
+add_executable(pantilt_adapter_node src/pantilt_adapter_node.cpp src/PanTiltAdapter.cpp)
+add_executable(pantilt_joy_node src/pantilt_joy_node.cpp src/PanTiltJoy.cpp)
 
 
-target_link_libraries(pan_tilt_adapter_node
+target_link_libraries(pantilt_adapter_node
    ${h4r_libsersyncproto_LIBRARIES}
    ${catkin_LIBRARIES}
 )
 
-target_link_libraries(pan_tilt_joy_node
+target_link_libraries(pantilt_joy_node
    ${catkin_LIBRARIES}
 )
 
