@@ -1,10 +1,10 @@
 <launch>
 	
-	<node pkg="h4r_pantilt_adapter" name="pan_tilt_cam0_adapter" type="pan_tilt_adapter_node" output="screen" required="true">
+	<node pkg="h4r_pantilt_adapter" name="pantilt_cam0_adapter" type="pantilt_adapter_node" output="screen" required="true">
 		<param name="servo_rate" value="500"/> 
 	</node>
 	
-	<node pkg="h4r_pantilt_adapter" name="pan_tilt_cam0_joy" type="pan_tilt_joy_node" output="screen" required="true">
+	<node pkg="h4r_pantilt_adapter" name="pantilt_cam0_joy" type="pantilt_joy_node" output="screen" required="true">
 		<param name="axis_pan" value="0" />
 		<param name="axis_tilt" value="1" />
 		<param name="is_button_axis" value="false" />		
