@@ -8,13 +8,13 @@
 		 <link name="pantilt_base_link">	
 			<visual> 	  	
 				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_adapter/meshes/basepart.dae"  />
+			  		<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/base.dae"  />
 				</geometry>
 			</visual>
 
 			<collision name="pantilt_foot_link_collision">
 				<geometry>	
-					<mesh filename="package://h4r_pantilt_adapter/meshes/basepart.dae"  />
+					<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/base.dae"  />
 				</geometry>	
 			</collision>
 
@@ -45,13 +45,13 @@
 		<link name="pantilt_center_link">
 			<visual> 	  	
 				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_adapter/meshes/centerpart.dae"  />
+			  		<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/center.dae"  />
 				</geometry>
 			</visual>
 
 			<collision name="pantilt_center_link_collision">
 				<geometry>	
-					<mesh filename="package://h4r_pantilt_adapter/meshes/centerpart.dae"  />
+					<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/center.dae"  />
 				</geometry>	
 			</collision>
 
@@ -80,13 +80,13 @@
 			
 			<visual> 	  	
 				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_adapter/meshes/toppart.dae"  />
+			  		<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/multicamera_mount.dae"  />
 				</geometry>
 			</visual>
 
 			<collision name="pantilt_top_link_collision">
 				<geometry>	
-					<mesh filename="package://h4r_pantilt_adapter/meshes/toppart.dae"  />
+					<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/multicamera_mount.dae"  />
 				</geometry>	
 			</collision>
 
