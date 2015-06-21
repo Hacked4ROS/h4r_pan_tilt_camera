@@ -34,7 +34,7 @@
 	<joint name="pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
       <limit lower="0" upper="1" effort="9" velocity="1" />      
-      <origin xyz="0 0 0.0028" rpy="0 0 0" />
+      <origin xyz="0 0 0.0027" rpy="0 0 0" />
       <parent link="pantilt_base_link"/>
       <child link="pantilt_center_link"/>
     </joint>
@@ -70,11 +70,10 @@
 	<joint name="pantilt_tilt_joint" type="revolute">
       <axis xyz="1 0 0"/>
       <limit lower="0" upper="1" effort="9" velocity="1" />
-      <origin xyz="-0.022267 0 0.045495" rpy="0 0 3.14" />
+      <origin xyz="0.0223 0 0.0455" rpy="0 0 0" />
       <parent link="pantilt_center_link"/>
       <child link="pantilt_top_link"/>
     </joint>
-		
 		
 		<link name="pantilt_top_link">	
 			
