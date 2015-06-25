@@ -41,7 +41,7 @@ public:
 
 private:
 	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
-	void publishPanTiltJointState();
+	void moveJoints();
 
 	ros::Subscriber sub_quat_;
 	ros::Publisher pub_joint_;
@@ -61,8 +61,8 @@ private:
 	double joint_torque_;
 	int pan_target_;
 	int tilt_target_;
-	int tilt;
-	int pan;
+	int tilt_;
+	int pan_;
 
 
 	double servo_rate_;

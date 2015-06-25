@@ -127,22 +127,49 @@ void H4RPanTiltGazebo::QueueThread()
     }
 }
 
-void H4RPanTiltGazebo::publishPanTiltJointState()
+void H4RPanTiltGazebo::moveJoints()
 {
-    joint_state_.header.stamp = ros::Time::now();
-    for ( int i = 0; i < 2; i++ ) {
-        physics::JointPtr joint = joints_[i];
-        math::Angle angle = joint->GetAngle ( 0 );
-        joint_state_.position[i] = angle.Radian () ;
-    }
-    pub_joint_.publish ( joint_state_ );
+
 }
 
 void H4RPanTiltGazebo::UpdateChild()
 {
-    if ( last_update_ > servo_rate_ ) //Do we have to update position?
-    {
 
+    if ( last_update_ > servo_rate_ ) //Do we have to update the position?
+    {
+    	if(pan_!=pan_target_)
+		{
+		  if(pan_<pan_target_)
+		  {
+			  pan_++;
+		  }
+		  else
+		  {
+			  pan_--;
+		  }
+		  if(pan_target_>180.0)pan_target_=180;
+		  if(pan_target_<0)pan_target_=0;
+		}
+
+		if(tilt_!=tilt_target_)
+		{
+		  if(tilt_<tilt_target_)
+		  {
+			  tilt_++;
+		  }
+		  else
+		  {
+			  tilt_--;
+		  }
+		  if(tilt_target_>180.0)tilt_target_=180;
+		  if(tilt_target_<0)tilt_target_=0;
+		}
+
+		joint_state_.position[0] = pan_*M_PI/180.0;
+		joint_state_.position[1] = tilt_*M_PI/180.0;
+		joint_state_.header.stamp= ros::Time::now();
+
+		pub_joint_.publish(joint_state_);
     }
 }
 
