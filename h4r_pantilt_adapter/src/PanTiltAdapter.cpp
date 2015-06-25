@@ -21,6 +21,7 @@ PanTiltAdapter::PanTiltAdapter()
 ,tilt(RESET_PAN_VALUE)
 ,pan(RESET_TILT_VALUE)
 ,timeout(serial::Timeout::simpleTimeout(1000))
+,send( boost::bind(&PanTiltAdapter::sendbyte, this, _1 ) )
 {
 	nh.param<string>("interface",port,"/dev/ttyACM0");
 	nh.param<int>("servo_rate", servo_rate, 500);
@@ -161,12 +162,11 @@ void PanTiltAdapter::run()
 		  if(pan_target<0)pan_target=0;
 
 
-		  boost::function<void (uint8_t)> f2( boost::bind(&PanTiltAdapter::sendbyte, this, _1 ) );
 
 		  sersyncproto_send(&serial_setup,
 				  	  	  	CAM_TRANSMIT_PAN,
 							(uint8_t*)&payloads,
-							f2);
+							send);
 		}
 
 		if(tilt!=tilt_target)
@@ -184,8 +184,7 @@ void PanTiltAdapter::run()
 		  if(tilt_target<0)tilt_target=0;
 		  sersyncproto_send(&serial_setup,
 				            CAM_TRANSMIT_TILT,
-							(uint8_t*)&payloads,
-							boost::bind(&PanTiltAdapter::sendbyte, this, _1));
+							(uint8_t*)&payloads,send);
 		}
 
 	  	joint_state.position[0] = pan*M_PI/180.0;

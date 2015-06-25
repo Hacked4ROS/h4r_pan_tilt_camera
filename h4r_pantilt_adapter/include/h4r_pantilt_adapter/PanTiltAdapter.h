@@ -39,7 +39,7 @@ private:
 		pan_target;
 
     sensor_msgs::JointState joint_state;
-
+    boost::function<void (uint8_t)> send;
 
 	void sendbyte(uint8_t byte);
 	void QuaternionCallback(const geometry_msgs::Quaternion::ConstPtr& msg);
