@@ -17,6 +17,10 @@
 #include <tf/transform_broadcaster.h>
 #include <geometry_msgs/Quaternion.h>
 #include <sensor_msgs/JointState.h>
+#include <sdf/sdf.hh>
+#include <ros/callback_queue.h>
+#include <ros/advertise_options.h>
+#include <tf/tf.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
@@ -28,7 +32,7 @@ class H4RPanTiltGazebo : public ModelPlugin {
 
 public:
 	H4RPanTiltGazebo();
-	~H4RPanTiltGazebo();
+	virtual ~H4RPanTiltGazebo();
     void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
 
 	  protected:
@@ -37,11 +41,11 @@ public:
 
 private:
 	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
+	void publishPanTiltJointState();
 
 	ros::Subscriber sub_quat_;
 	ros::Publisher pub_joint_;
 
-	boost::shared_ptr<tf::TransformBroadcaster> transform_broadcaster_;
 
 	GazeboRosPtr gazebo_ros_;
 	physics::ModelPtr parent;
@@ -51,12 +55,31 @@ private:
 	std::string robot_namespace_;
 	std::string command_topic_;
 	std::string base_frame_;
+	sensor_msgs::JointState joint_state_;
+
 
 	double joint_torque_;
 	int pan_target_;
 	int tilt_target_;
+	int tilt;
+	int pan;
+
 
 	double servo_rate_;
+
+    double tilt_spd_;
+    double pan_spd_;
+
+
+
+	// Custom Callback Queue
+	ros::CallbackQueue queue_;
+	boost::thread callback_queue_thread_;
+	void QueueThread();
+	bool alive_;
+
+
+	common::Time last_update_;
 };
 
 

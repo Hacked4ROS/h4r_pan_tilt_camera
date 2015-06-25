@@ -38,8 +38,6 @@ private:
 	int tilt_target,
 		pan_target;
 
-
-
     sensor_msgs::JointState joint_state;
 
 

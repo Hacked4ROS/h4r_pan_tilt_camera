@@ -108,7 +108,7 @@ include_directories(
 
 ## Declare a cpp library
 add_library(h4r_pantilt_gazebo
-   src/H4RGazeboPanTilt.cpp
+   src/H4RPanTiltGazebo.cpp
 )
 ## Specify libraries to link a library or executable target against
 target_link_libraries(h4r_pantilt_gazebo
