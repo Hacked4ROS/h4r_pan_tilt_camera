@@ -129,13 +129,15 @@ void H4RPanTiltGazebo::QueueThread()
 
 void H4RPanTiltGazebo::moveJoints()
 {
-
+  joints_[PAN]->SetAngle ( 0, (pan_*M_PI)/180.0  );
+  joints_[TILT]->SetAngle ( 0,(tilt_*M_PI)/180.0 );
 }
 
 void H4RPanTiltGazebo::UpdateChild()
 {
-
-    if ( last_update_ > servo_rate_ ) //Do we have to update the position?
+	double secondslast_update = ( parent->GetWorld()->GetSimTime()
+			                             - last_update_ ).Double();
+    if ( secondslast_update > servo_rate_ ) //Do we have to update the position?
     {
     	if(pan_!=pan_target_)
 		{
@@ -170,7 +172,9 @@ void H4RPanTiltGazebo::UpdateChild()
 		joint_state_.header.stamp= ros::Time::now();
 
 		pub_joint_.publish(joint_state_);
+		last_update_+= common::Time ( servo_rate_ );
     }
+    this->moveJoints();
 }
 
 void H4RPanTiltGazebo::FiniChild()
@@ -181,9 +185,6 @@ void H4RPanTiltGazebo::FiniChild()
     gazebo_ros_->node()->shutdown();
     callback_queue_thread_.join();
 }
-
-
-
 
 GZ_REGISTER_MODEL_PLUGIN ( H4RPanTiltGazebo )
 }
