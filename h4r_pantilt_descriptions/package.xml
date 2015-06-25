@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>h4r_pantilt_descriptions</name>
+  <version>0.0.0</version>
+  <description>The h4r_pantilt_descriptions package contains the meshes and urdf files for
+  	the pantilt adapters</description>
+
+  <maintainer email="cyborgx1@gmail.com">Christian Holl</maintainer>
+  <author email="cyborgx1@gmail.com">Christian Holl</author>
+  
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>xacro</build_depend>
+  <run_depend>xacro</run_depend>
+
+  <export>
+  </export>
+</package>
