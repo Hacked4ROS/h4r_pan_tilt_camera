@@ -100,4 +100,23 @@
 			</inertial>
 		</link>	
 		
+		
+<gazebo>	
+	<plugin name="H4RPanTiltGazebo"
+		filename="libh4r_pantilt_gazebo.so">
+		
+		<commandTopic>cmd_dir</commandTopic>
+		<servoTorque>1.0</servoTorque>	
+		<servoRate>5.0</servoRate>
+		<panStart>90</panStart>
+		<tiltStart>90</tiltStart>
+
+		<panJoint>pantilt_pan_joint</panJoint>
+		<tiltJoint>pantilt_tilt_joint</tiltJoint>
+							
+		<alwaysOn>true</alwaysOn>
+			    
+	</plugin>
+</gazebo>
+	
 </robot>

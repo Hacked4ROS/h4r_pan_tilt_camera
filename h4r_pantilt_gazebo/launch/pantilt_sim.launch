@@ -1,0 +1,3 @@
+<launch>
+	<param name="pantilt_description" command="$(find xacro)/xacro '$(find h4r_pantilt_descriptions)/defs/pan_tilt_adapter.xacro'" />
+</launch>

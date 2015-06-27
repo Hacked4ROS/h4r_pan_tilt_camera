@@ -31,10 +31,10 @@ void H4RPanTiltGazebo::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf){
 
     gazebo_ros_->getParameter<std::string> ( command_topic_, "commandTopic", "cmd_dir" );
     gazebo_ros_->getParameter<std::string> ( base_frame_, "baseFrame", "pantilt_base_frame" );
-    gazebo_ros_->getParameter<double> ( joint_torque_, "wheelTorque", 5.0 );
+    gazebo_ros_->getParameter<double> ( joint_torque_, "servoTorque", 5.0 );
     gazebo_ros_->getParameter<double> ( servo_rate_, "servoRate", 5.0 );
-    gazebo_ros_->getParameter<int> ( pan_target_, "panStart", 0 );
-    gazebo_ros_->getParameter<int> ( tilt_target_, "tiltStart", 0 );
+    gazebo_ros_->getParameter<int> ( pan_target_, "panStart", 90 );
+    gazebo_ros_->getParameter<int> ( tilt_target_, "tiltStart", 90 );
 
     joints_.resize ( 2 );
     joints_[PAN] = gazebo_ros_->getJoint ( parent, "panJoint", "pantilt_pan_joint" );
