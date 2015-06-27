@@ -33,7 +33,7 @@
 		
 	<joint name="pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="1" effort="9" velocity="1" />      
+      <limit lower="0" upper="3.14" effort="9" velocity="1" />      
       <origin xyz="0 0 0.0027" rpy="0 0 0" />
       <parent link="pantilt_base_link"/>
       <child link="pantilt_center_link"/>
@@ -49,11 +49,11 @@
 				</geometry>
 			</visual>
 
-			<collision name="pantilt_center_link_collision">
+<!--			<collision name="pantilt_center_link_collision">
 				<geometry>	
 					<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/center.dae"  />
 				</geometry>	
-			</collision>
+			</collision>-->
 
 			<inertial>
 				<mass value="0.025" />
@@ -69,7 +69,7 @@
 		
 	<joint name="pantilt_tilt_joint" type="revolute">
       <axis xyz="1 0 0"/>
-      <limit lower="0" upper="1" effort="9" velocity="1" />
+      <limit lower="0" upper="3.14" effort="9" velocity="1" />
       <origin xyz="0.0223 0 0.0455" rpy="0 0 0" />
       <parent link="pantilt_center_link"/>
       <child link="pantilt_top_link"/>
@@ -83,12 +83,12 @@
 				</geometry>
 			</visual>
 
-			<collision name="pantilt_top_link_collision">
+	<!--		<collision name="pantilt_top_link_collision">
 				<geometry>	
 					<mesh filename="package://h4r_pantilt_adapter/meshes/v1_combined/multicamera_mount.dae"  />
 				</geometry>	
 			</collision>
-
+-->
 			<inertial>
 				<mass value="0.010" />
 				<inertia ixx="4.481" 
@@ -107,15 +107,14 @@
 		
 		<commandTopic>cmd_dir</commandTopic>
 		<servoTorque>1.0</servoTorque>	
-		<servoRate>5.0</servoRate>
+		<servoRate>500.0</servoRate>
 		<panStart>90</panStart>
 		<tiltStart>90</tiltStart>
 
 		<panJoint>pantilt_pan_joint</panJoint>
 		<tiltJoint>pantilt_tilt_joint</tiltJoint>
 							
-		<alwaysOn>true</alwaysOn>
-			    
+		<alwaysOn>true</alwaysOn>	    
 	</plugin>
 </gazebo>
 	

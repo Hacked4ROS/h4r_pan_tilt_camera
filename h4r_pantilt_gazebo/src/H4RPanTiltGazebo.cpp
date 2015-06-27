@@ -190,8 +190,15 @@ namespace gazebo
 
     void H4RPanTiltGazebo::moveJoints()
     {
-      joints_[PAN]->SetAngle ( 0, (pan_*M_PI)/180.0  );
-      joints_[TILT]->SetAngle ( 0,(tilt_*M_PI)/180.0 );
+    	math::Angle pan;
+    	math::Angle tilt;
+
+    	pan.SetFromDegree(pan_);
+    	tilt.SetFromDegree(tilt_);
+      joints_[PAN]->SetAngle ( 0, pan  );
+      joints_[TILT]->SetAngle ( 0, tilt );
+
+      ROS_INFO_STREAM("Pan "<<pan_<<" "<<"Tilt "<<tilt_);
     }
 
 
