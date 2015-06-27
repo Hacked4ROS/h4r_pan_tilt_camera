@@ -37,7 +37,7 @@ namespace gazebo
 
 
 	void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
-    void Update(const common::UpdateInfo & /*_info*/);
+    void Update(const common::UpdateInfo &info);
     void Reset();
 
     private:
@@ -83,66 +83,4 @@ namespace gazebo
   };
 
 }
-
-
-/*
-class H4RPanTiltGazebo : public ModelPlugin
-{
-
-
-public:
-	H4RPanTiltGazebo();
-	virtual ~H4RPanTiltGazebo();
-
-	  protected:
-		  virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
-		  virtual void Reset();
-	      virtual void UpdateChild();
-	      virtual void FiniChild();
-
-private:
-	GazeboRosPtr gazebo_ros_;
-
-    event::ConnectionPtr update_connection_;
-
-	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
-	void moveJoints();
-
-	ros::Subscriber sub_quat_;
-	ros::Publisher pub_joint_;
-
-	physics::ModelPtr parent;
-
-	std::vector<physics::JointPtr> joints_;
-
-	std::string namespace_;
-	std::string command_topic_;
-	std::string base_frame_;
-	sensor_msgs::JointState joint_state_;
-
-
-	double joint_torque_;
-	int pan_target_;
-	int tilt_target_;
-	int tilt_;
-	int pan_;
-
-	double servo_rate_;
-
-    double tilt_spd_;
-    double pan_spd_;
-
-	// Custom Callback Queue
-	ros::CallbackQueue queue_;
-	boost::thread callback_queue_thread_;
-	void QueueThread();
-	bool alive_;
-
-
-	common::Time last_update_;
-};
-
-
-}/*namespace gazebo*/
-
 #endif /* H4RPANTILTGAZEBO_H_ */

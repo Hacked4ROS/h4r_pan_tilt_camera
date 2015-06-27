@@ -5,4 +5,22 @@
     	  args="-z 0.2 -x 0 -urdf -param pantilt_description -model pantilt_description" 
     	  respawn="false" />
  
+    <node pkg="joy" name="joystick" type="joy_node" />	  	
+    <node pkg="h4r_pantilt_adapter" name="pantilt_cam0_joy" type="pantilt_joy_node" output="screen" required="true">
+		<param name="axis_pan" value="0" />
+		<param name="axis_tilt" value="1" />
+		<param name="is_button_axis" value="false" />		
+<!--		
+		<param name="button_tilt_up" value="14"/>
+		<param name="button_tilt_down" value="16"/>
+		<param name="button_pan_up" value="15"/>
+		<param name="button_pan_down" value="17"/>
+				    -->
+
+		<param name="lock_is_switch" value="true" />
+		<param name="locked" value="true" />		
+		<param name="button_reset_lock" value="0" />
+		<remap from="~/joy" to="/joy"/>
+	</node>
+		
 </launch>
