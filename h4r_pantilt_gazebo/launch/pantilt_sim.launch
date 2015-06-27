@@ -1,3 +1,8 @@
 <launch>
+	<include file="$(find h4r_rapid_robot_xacros)/launch/empty_world.launch"/>
 	<param name="pantilt_description" command="$(find xacro)/xacro '$(find h4r_pantilt_descriptions)/defs/pan_tilt_adapter.xacro'" />
+	<node name="spawn_test_bot" pkg="gazebo_ros" type="spawn_model" 
+    	  args="-z 0.2 -x 0 -urdf -param pantilt_description -model pantilt_description" 
+    	  respawn="false" />
+ 
 </launch>

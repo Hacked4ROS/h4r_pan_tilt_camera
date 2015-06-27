@@ -8,9 +8,10 @@
 #ifndef H4RPANTILTGAZEBO_H_
 #define H4RPANTILTGAZEBO_H_
 
-
-#include <gazebo/common/common.hh>
+#include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
+#include <gazebo/common/common.hh>
+
 #include <gazebo_plugins/gazebo_ros_utils.h>
 
 #include <ros/ros.h>
@@ -25,34 +26,37 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
-namespace gazebo {
+#include <stdio.h>
 
-class H4RPanTiltGazebo : public ModelPlugin {
-
-
-public:
-	H4RPanTiltGazebo();
+namespace gazebo
+{
+  class H4RPanTiltGazebo : public ModelPlugin
+  {
+    public:
 	virtual ~H4RPanTiltGazebo();
-    void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
 
-	  protected:
-		virtual void UpdateChild();
-		virtual void FiniChild();
 
-private:
+	void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
+    void Update(const common::UpdateInfo & /*_info*/);
+    void Reset();
+
+    private:
+    physics::ModelPtr model_;
+	GazeboRosPtr gazebo_ros_;
+
+    event::ConnectionPtr updateConnection;
+
 	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
 	void moveJoints();
 
 	ros::Subscriber sub_quat_;
 	ros::Publisher pub_joint_;
 
-
-	GazeboRosPtr gazebo_ros_;
-	physics::ModelPtr parent;
-	event::ConnectionPtr update_connection_;
+	physics::ModelPtr parent_;
 
 	std::vector<physics::JointPtr> joints_;
-	std::string robot_namespace_;
+
+	std::string namespace_;
 	std::string command_topic_;
 	std::string base_frame_;
 	sensor_msgs::JointState joint_state_;
@@ -64,13 +68,69 @@ private:
 	int tilt_;
 	int pan_;
 
-
 	double servo_rate_;
 
     double tilt_spd_;
     double pan_spd_;
 
+	// Custom Callback Queue
+	ros::CallbackQueue queue_;
+	boost::thread callback_queue_thread_;
+	void QueueThread();
+	bool alive_;
 
+	common::Time last_update_;
+  };
+
+}
+
+
+/*
+class H4RPanTiltGazebo : public ModelPlugin
+{
+
+
+public:
+	H4RPanTiltGazebo();
+	virtual ~H4RPanTiltGazebo();
+
+	  protected:
+		  virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+		  virtual void Reset();
+	      virtual void UpdateChild();
+	      virtual void FiniChild();
+
+private:
+	GazeboRosPtr gazebo_ros_;
+
+    event::ConnectionPtr update_connection_;
+
+	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
+	void moveJoints();
+
+	ros::Subscriber sub_quat_;
+	ros::Publisher pub_joint_;
+
+	physics::ModelPtr parent;
+
+	std::vector<physics::JointPtr> joints_;
+
+	std::string namespace_;
+	std::string command_topic_;
+	std::string base_frame_;
+	sensor_msgs::JointState joint_state_;
+
+
+	double joint_torque_;
+	int pan_target_;
+	int tilt_target_;
+	int tilt_;
+	int pan_;
+
+	double servo_rate_;
+
+    double tilt_spd_;
+    double pan_spd_;
 
 	// Custom Callback Queue
 	ros::CallbackQueue queue_;

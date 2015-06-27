@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   std_srvs
   tf
+  gazebo_plugins
 )
 
 
@@ -85,8 +86,8 @@ find_package(gazebo REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES h4r_pantilt_gazebo
-  CATKIN_DEPENDS geometry_msgs roscpp std_msgs std_srvs tf
+  LIBRARIES
+  CATKIN_DEPENDS geometry_msgs roscpp std_msgs std_srvs tf gazebo_plugins
   DEPENDS gazebo
 )
 
@@ -102,6 +103,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
+  ${GAZEBO_PLUGINS_INCLUDE_DIRS}
 )
 
 #link_directories(${GAZEBO_LIBRARY_DIRS})
@@ -112,8 +114,7 @@ add_library(h4r_pantilt_gazebo
 )
 ## Specify libraries to link a library or executable target against
 target_link_libraries(h4r_pantilt_gazebo
-   ${GAZEBO_LIBRARIES} 
-   ${catkin_LIBRARIES}
+   ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES} ${GAZEBO_PLUGINS_LIBRARIES}
 )
 
 #############
