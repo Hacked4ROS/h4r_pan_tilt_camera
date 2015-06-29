@@ -202,26 +202,4 @@ namespace gazebo
 
 
     GZ_REGISTER_MODEL_PLUGIN ( H4RPanTiltGazebo )
-}
-
-
-
-
-
-/*
-
-
-
-
-
-
-
-
-void H4RPanTiltGazebo::FiniChild()
-{
-
-}
-
-GZ_REGISTER_MODEL_PLUGIN ( H4RPanTiltGazebo )
-}
-*/
+}/*namespace*/
