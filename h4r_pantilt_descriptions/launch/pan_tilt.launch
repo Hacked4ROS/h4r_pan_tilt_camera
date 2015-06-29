@@ -22,7 +22,7 @@
 	</node>
 		
 	<node pkg="joy" name="joystick" type="joy_node" />
-	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_adapter)/rviz/pan_tilt_view.rviz" required="true" />	
+	<node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_descriptions)/rviz/pan_tilt_view.rviz" required="true" />	
 
 		<param name="robot_description"  command=
 	"$(find xacro)/xacro.py $(find h4r_pantilt_descriptions)/defs/pan_tilt_adapter.xacro" />
