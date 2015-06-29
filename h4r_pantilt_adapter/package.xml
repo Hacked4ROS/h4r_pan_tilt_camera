@@ -16,6 +16,8 @@
   <build_depend>serial</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>h4r_libsersyncproto</build_depend>
+  <build_depend>h4r_pantilt_proto</build_depend>
+  
   <build_depend>tf</build_depend>
   <build_depend>tf2</build_depend>
 
