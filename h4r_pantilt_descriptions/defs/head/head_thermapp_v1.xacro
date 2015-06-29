@@ -1,0 +1,30 @@
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+	   name="head_thermapp_v1"
+	>
+		<link name="pantilt_head_link">	
+			
+			<visual> 	  	
+				<geometry>					
+			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/thermapp_camera_mount_v1.dae"  />
+				</geometry>
+			</visual>
+			<collision name="pantilt_top_link_collision">
+				<geometry>	
+					<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/thermapp_camera_mount_v1.dae"  />
+				</geometry>	
+			</collision>
+			<inertial>
+				<mass value="0.010" />
+				<inertia ixx="4.481" 
+						 iyy="2.930" 
+						 izz="5.819" 
+				         iyz="-0.083" 
+				         ixy="0.049" 
+				         ixz="0.317" />
+			</inertial>
+		</link>	
+		
+</robot>
