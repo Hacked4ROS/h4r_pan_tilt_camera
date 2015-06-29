@@ -12,7 +12,7 @@
 #include <cmath>
 #include <cfloat>
 #include <tf/tf.h>
-#include "protocol_definition.h"
+#include <h4r_pantilt_proto/protocol_definition.h>
 
 namespace pan_tilt_adapter {
 

@@ -3,6 +3,7 @@ project(h4r_pantilt_adapter)
 
 find_package(catkin REQUIRED COMPONENTS
   h4r_libsersyncproto
+  h4r_pantilt_proto
   geometry_msgs
   roscpp
   sensor_msgs
@@ -15,12 +16,12 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 catkin_package(
-  INCLUDE_DIRS include shared
+  INCLUDE_DIRS include 
 )
 
 include_directories(  
   include
-  shared
+  ${h4r_pantilt_proto_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
