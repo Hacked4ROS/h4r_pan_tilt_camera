@@ -5,10 +5,12 @@ project(h4r_pantilt_mcu_avr)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  avr-libc
-  avrdude
-  gcc-avr
 )
+
+#  avr-libc
+#  avrdude
+#  gcc-avr
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
