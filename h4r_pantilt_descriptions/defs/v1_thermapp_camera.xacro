@@ -2,35 +2,10 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro"
-	   name="pan_tilt_base_v1"
+	   name="pan_tilt_thermapp_camera"
 	>
-	
-		 <link name="pantilt_base_link">
-			<visual> 	  	
-				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/base_v1.dae"  />
-				</geometry>
-			</visual>
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/base/base_v1.xacro"/>
 
-			<collision name="pantilt_foot_link_collision">
-				<geometry>	
-					<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/base_v1.dae"  />
-				</geometry>	
-			</collision>
-
-			<inertial>
-				<mass value="0.010" />
-				<inertia ixx="3.8" 
-						 iyy="3.8" 
-						 izz="7.6" 
-				         iyz="0.0" 
-				         ixy="0.0" 
-				         ixz="0.0" />
-			</inertial>
-		</link>	
-
-		
-		
 	<joint name="pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
       <limit lower="0" upper="3.14" effort="9" velocity="1" />      
@@ -40,20 +15,19 @@
     </joint>
 		
 		
-		
-		
-		<link name="pantilt_center_link">
+	<link name="pantilt_center_link">
 			<visual> 	  	
 				<geometry>					
 			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/center_v1.dae"  />
 				</geometry>
 			</visual>
 
-<!--			<collision name="pantilt_center_link_collision">
+			<collision name="pantilt_center_link_collision">
+				<origin rpy="0 0 0" xyz="0 0 0.0026"/>
 				<geometry>	
-					<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/center_v1.dae"  />
+					<cylinder length="0.0018" radius="0.045"/>
 				</geometry>	
-			</collision>-->
+			</collision>
 
 			<inertial>
 				<mass value="0.025" />
@@ -83,7 +57,8 @@
 				</geometry>
 			</visual>
 
-	<!--		<collision name="pantilt_top_link_collision">
+<!--		
+			<collision name="pantilt_top_link_collision">
 				<geometry>	
 					<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/thermapp_camera_mount_v1.dae"  />
 				</geometry>	
