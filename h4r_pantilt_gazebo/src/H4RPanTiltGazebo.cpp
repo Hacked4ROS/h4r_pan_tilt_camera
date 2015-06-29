@@ -198,7 +198,6 @@ namespace gazebo
       joints_[PAN]->SetAngle ( 0, pan  );
       joints_[TILT]->SetAngle ( 0, tilt );
 
-      ROS_INFO_STREAM("Pan "<<pan_<<" "<<"Tilt "<<tilt_);
     }
 
 
