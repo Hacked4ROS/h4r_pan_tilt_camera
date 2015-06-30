@@ -43,10 +43,7 @@
   <build_depend>avr-libc</build_depend>
   <build_depend>avrdude</build_depend>
   <build_depend>gcc-avr</build_depend>
-  <run_depend>avr-libc</run_depend>
-  <run_depend>avrdude</run_depend>
-  <run_depend>gcc-avr</run_depend>
-
+  <build_depend>h4r_pantilt_proto</build_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
