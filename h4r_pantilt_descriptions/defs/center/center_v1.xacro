@@ -17,11 +17,11 @@
 			<collision name="pantilt_center_link_collision">
 				<origin rpy="0 0 0" xyz="0 0 0.0026"/>
 				<geometry>	
-					<cylinder length="0.0018" radius="0.045"/>
+					<cylinder length="0.0018" radius="0.040"/>
 				</geometry>	
 			</collision>
 
-			<inertial>
+			<inertial>		
 				<mass value="0.025" />
 				<inertia ixx="9.325" 
 						 iyy="11.911" 
@@ -31,6 +31,21 @@
 				         ixz="1.025" />
 			</inertial>
 	</link>	
+	
+	
+    <joint name="pantilt_center_col2_joint" type="fixed">
+	  <origin rpy="0 0 0" xyz="-0.00340 0 0.02955"/>
+      <parent link="pantilt_center_link"/>
+      <child link="pantilt_center_col_link"/>
+    </joint>
+    
+	<link name="pantilt_center_col_link">
+		<collision name="pantilt_center_link_collision2">
+			<geometry>	
+				<box size="0.054 0.016 0.052" />
+			</geometry>	
+		</collision>	
+	</link>
 		
 		
 </robot>
