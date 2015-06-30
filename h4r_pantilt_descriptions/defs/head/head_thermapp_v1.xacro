@@ -12,8 +12,9 @@
 				</geometry>
 			</visual>
 			<collision name="pantilt_top_link_collision">
+			    <origin rpy="0 -1.57079632679 0" xyz="-0.0168 0.00606 -0.00335"/>
 				<geometry>	
-					<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/thermapp_camera_mount_v1.dae"  />
+					<box size="0.061 0.037 0.039" />
 				</geometry>	
 			</collision>
 			<inertial>
