@@ -9,7 +9,7 @@
 #define GLOBALS_H_
 
 
-#include "../config/config.h"
+#include "config.h"
 
 typedef struct
 {

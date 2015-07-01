@@ -20,7 +20,7 @@
 #include "uart.h"
 
 #include <sersyncproto.h>
-#include "../pwm/pwm.h"
+#include "pwm.h"
 
 
 void uart_sendByte(uint8_t byte)

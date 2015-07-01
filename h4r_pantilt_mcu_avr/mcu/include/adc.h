@@ -8,7 +8,7 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-#include "../config/config.h"
+#include "config.h"
 
 /**
  * initializes the ADC setup

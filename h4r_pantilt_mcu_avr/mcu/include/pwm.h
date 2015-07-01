@@ -8,7 +8,7 @@
 #ifndef PWM_H_
 #define PWM_H_
 
-#include "../config/config.h"
+#include "config.h"
 
 
 void pwm_init();

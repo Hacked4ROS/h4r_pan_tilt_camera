@@ -8,7 +8,7 @@
 #ifndef UART_H_
 #define UART_H_
 
-#include "../config/config.h"
+#include "config.h"
 
 /**
  * Init uart interface

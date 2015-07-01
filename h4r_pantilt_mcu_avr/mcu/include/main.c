@@ -4,7 +4,7 @@
  *  Created on: Jan 11, 2015
  *      Author: Christian Holl
  */
-#include "config/init.h"
+#include "init.h"
 
 int main()
 {
@@ -39,6 +39,8 @@ int main()
 			servo1(var);
 			for (int i = 0; i < 50; ++i);
 		}
+
+
 	}
 	return 0;
 }

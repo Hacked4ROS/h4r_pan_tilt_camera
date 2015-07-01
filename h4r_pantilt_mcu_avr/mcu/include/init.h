@@ -8,10 +8,10 @@
 #ifndef INIT_H_
 #define INIT_H_
 
-#include "../adc/adc.h"
-#include "../pwm/pwm.h"
-#include "../uart/uart.h"
-#include "../config/config.h"
+#include "adc.h"
+#include "pwm.h"
+#include "uart.h"
+#include "config.h"
 
 /**
  * Initialize System functions

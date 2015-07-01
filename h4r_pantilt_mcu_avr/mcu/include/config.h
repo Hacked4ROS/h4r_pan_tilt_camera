@@ -19,8 +19,8 @@
 #define servo_max 640
 #define servo_min 175
 
-#include <protocol_definition.h>
-#include "../globals/globals.h"
+#include <h4r_pantilt_proto/protocol_definition.h>
+#include "globals.h"
 
 
 

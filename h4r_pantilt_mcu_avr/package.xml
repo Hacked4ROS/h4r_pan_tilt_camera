@@ -44,7 +44,7 @@
   <build_depend>avrdude</build_depend>
   <build_depend>gcc-avr</build_depend>
   <build_depend>h4r_pantilt_proto</build_depend>
-
+  <build_depend>h4r_libsersyncproto</build_depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->
