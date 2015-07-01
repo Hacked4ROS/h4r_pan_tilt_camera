@@ -11,9 +11,6 @@ include_directories(
     include
 )
 
-
-message("-------------BUILDING AVR CODE-------------------------------------- ${CATKIN_PACKAGE_SHARE_DESTINATION}")
-
 SET(CMAKE_C_COMPILER avr-gcc)
 SET(CMAKE_CXX_COMPILER avr-gcc)
 
