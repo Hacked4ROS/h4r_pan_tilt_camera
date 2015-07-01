@@ -63,16 +63,7 @@ WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
 endmacro(convert_hex)
 
-
-
 convert_hex(pan_tilt_avr_arduino_uno.hex)
-
-#get_cmake_property(_variableNames VARIABLES)
-#foreach (_variableName ${_variableNames})
-#    message(STATUS "${_variableName}=${${_variableName}}")
-#endforeach()
-
-
 
 ## Mark executables for installation
 install(TARGETS pan_tilt_avr_arduino_uno.hex
