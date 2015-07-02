@@ -57,7 +57,6 @@ macro(convert_hex name)
 add_custom_command( 
 TARGET ${name}
 POST_BUILD 
-COMMAND cp ${name} ${name}.elf
 COMMAND avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex ${name}
 COMMAND chmod -x ${name}
 WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
