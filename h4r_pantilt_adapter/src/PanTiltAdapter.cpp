@@ -27,6 +27,9 @@ PanTiltAdapter::PanTiltAdapter()
 	nh.param<int>("servo_rate", servo_rate, 500);
 	nh.param<int>("pan_start",pan_target ,RESET_PAN_VALUE);
 	nh.param<int>("tilt_start",tilt_target ,RESET_TILT_VALUE);
+	nh.param<string>("camera_name",camera_name,"");
+	nh.param<string>("pan_joint",pan_joint,"pantilt_pan_joint");
+	nh.param<string>("tilt_joint",tilt_joint,"pantilt_tilt_joint");
 
 	if(pan_target<0 || pan_target>180)
 	{
@@ -40,28 +43,21 @@ PanTiltAdapter::PanTiltAdapter()
 		exit(1);
 	}
 
-	//Get the namespace for tf transform id
-	string ns=nh.getNamespace();
-
-	//Replace / with _
-	//TODO
-
-	//Delete leading underscores
-	while(ns[0]=='_')
-	{
-		ns.erase(ns.begin());
-	}
-
-
   	joint_state.header.stamp = ros::Time::now();
   	joint_state.name.resize(2);
   	joint_state.position.resize(2);
 
-  	joint_state.name[0] = "pantilt_pan_joint";
+  	joint_state.name[0] = pan_joint;
   	joint_state.position[0] = pan_target;
 
-  	joint_state.name[1] = "pantilt_tilt_joint";
+  	joint_state.name[1] = tilt_joint;
   	joint_state.position[1] = tilt_target;
+
+	if(camera_name.size())
+	{
+		joint_state.name[0]=camera_name+"/"+joint_state.name[0];
+		joint_state.name[1]=camera_name+"/"+joint_state.name[1];
+	}
 
 	//Open Serial interface
 	serial_interface.setBaudrate(BAUD);

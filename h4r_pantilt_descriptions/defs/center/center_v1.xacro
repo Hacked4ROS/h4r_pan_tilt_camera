@@ -6,15 +6,14 @@
 	>
 	
 					
-		
-	<link name="pantilt_center_link">
+	<link name="${camera_name}/pantilt_center_link">
 			<visual> 	  	
 				<geometry>					
 			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/center_v1.dae"  />
 				</geometry>
 			</visual>
 
-			<collision name="pantilt_center_link_collision">
+			<collision name="${camera_name}/pantilt_center_link_collision">
 				<origin rpy="0 0 0" xyz="0 0 0.0026"/>
 				<geometry>	
 					<cylinder length="0.0018" radius="0.040"/>
@@ -33,14 +32,14 @@
 	</link>	
 	
 	
-    <joint name="pantilt_center_col2_joint" type="fixed">
+    <joint name="${camera_name}/pantilt_center_col2_joint" type="fixed">
 	  <origin rpy="0 0 0" xyz="-0.00340 0 0.02955"/>
-      <parent link="pantilt_center_link"/>
-      <child link="pantilt_center_col_link"/>
+      <parent link="${camera_name}/pantilt_center_link"/>
+      <child link="${camera_name}/pantilt_center_col_link"/>
     </joint>
     
-	<link name="pantilt_center_col_link">
-		<collision name="pantilt_center_link_collision2">
+	<link name="${camera_name}/pantilt_center_col_link">
+		<collision name="${camera_name}/pantilt_center_link_collision2">
 			<geometry>	
 				<box size="0.054 0.016 0.052" />
 			</geometry>	

@@ -4,24 +4,29 @@
        xmlns:xacro="http://ros.org/wiki/xacro"
 	   name="pan_tilt_thermapp_camera"
 	>
+	
+	<xacro:arg name="camera_name" default="cam"/>
+	<property name="camera_name" value="$(arg camera_name)" />
+	
 	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/base/base_v1.xacro"/>
 
-	<joint name="pantilt_pan_joint" type="revolute">
+
+	<joint name="${camera_name}/pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
       <limit lower="0" upper="3.14" effort="9" velocity="1" />      
       <origin xyz="0 0 0.0027" rpy="0 0 0" />
-      <parent link="pantilt_base_link"/>
-      <child link="pantilt_center_link"/>
+      <parent link="${camera_name}/pantilt_base_link"/>
+      <child link="${camera_name}/pantilt_center_link"/>
     </joint>
 
     <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/center/center_v1.xacro"/>
 		
-	<joint name="pantilt_tilt_joint" type="revolute">
+	<joint name="${camera_name}/pantilt_tilt_joint" type="revolute">
       <axis xyz="1 0 0"/>
       <limit lower="0" upper="3.14" effort="9" velocity="1" />
       <origin xyz="0.0223 0 0.0455" rpy="0 0 0" />
-      <parent link="pantilt_center_link"/>
-      <child link="pantilt_head_link"/>
+      <parent link="${camera_name}/pantilt_center_link"/>
+      <child link="${camera_name}/pantilt_head_link"/>
     </joint>
 		
     <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/head/head_thermapp_v1.xacro"/>
@@ -29,7 +34,7 @@
 
 		
 <gazebo>	
-	<plugin name="H4RPanTiltGazebo"
+	<plugin name="${camera_name}/H4RPanTiltGazebo"
 		filename="libh4r_pantilt_gazebo.so">
 		
 		<commandTopic>cmd_dir</commandTopic>
@@ -38,11 +43,10 @@
 		<panStart>90</panStart>
 		<tiltStart>90</tiltStart>
 
-		<panJoint>pantilt_pan_joint</panJoint>
-		<tiltJoint>pantilt_tilt_joint</tiltJoint>
+		<panJoint>${camera_name}/pantilt_pan_joint</panJoint>
+		<tiltJoint>${camera_name}/pantilt_tilt_joint</tiltJoint>
 							
 		<alwaysOn>true</alwaysOn>	    
 	</plugin>
 </gazebo>
-	
 </robot>

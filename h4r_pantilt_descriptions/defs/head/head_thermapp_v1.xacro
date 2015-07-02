@@ -4,14 +4,14 @@
        xmlns:xacro="http://ros.org/wiki/xacro"
 	   name="head_thermapp_v1"
 	>
-		<link name="pantilt_head_link">	
+		<link name="${camera_name}/pantilt_head_link">	
 			
 			<visual> 	  	
 				<geometry>					
 			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/thermapp_camera_mount_v1.dae"  />
 				</geometry>
 			</visual>
-			<collision name="pantilt_top_link_collision">
+			<collision name="${camera_name}/pantilt_head_link_collision">
 			    <origin rpy="0 -1.57079632679 0" xyz="-0.0168 0.00606 -0.00335"/>
 				<geometry>	
 					<box size="0.061 0.037 0.039" />

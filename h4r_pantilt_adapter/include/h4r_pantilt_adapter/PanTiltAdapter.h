@@ -25,6 +25,10 @@ private:
 	ros::Subscriber sub_quat;
 	ros::Publisher pub_joint;
 
+	std::string camera_name;
+	std::string pan_joint;
+	std::string tilt_joint;
+
 	int tilt;
 	int pan;
 

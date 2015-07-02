@@ -4,8 +4,9 @@
        xmlns:xacro="http://ros.org/wiki/xacro"
 	   name="pantilt_base_v1"
 	>
-	
-		 <link name="pantilt_base_link">
+
+	     
+		 <link name="${camera_name}/pantilt_base_link">
 			<visual> 	  	
 				<origin rpy="0 0 0" xyz="0 0 0"/>
 				<geometry>
@@ -13,7 +14,7 @@
 				</geometry>
 			</visual>
 
-			<collision name="pantilt_foot_link_collision">
+			<collision name="${camera_name}/pantilt_base_link_collision">
 				<origin rpy="0 0 0" xyz="0 0 0.0009"/>
 				<geometry>	
 					<cylinder length="0.0018" radius="0.045"/>
