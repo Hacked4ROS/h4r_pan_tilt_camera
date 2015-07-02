@@ -11,30 +11,25 @@ include_directories(
     include
 )
 
+
+SET(MCU_TYPE atmega328p)
+SET(FREQUENCY_HZ 16000000)
+SET(OPTIMIZATIONS 0)
+SET(STANDARD gnu99)
+
+
+#Compiler
 SET(CMAKE_C_COMPILER avr-gcc)
 SET(CMAKE_CXX_COMPILER avr-gcc)
+#Linker
+SET(CMAKE_LINKER avr-g++)
+
 
 SET(CMAKE_FIND_ROOT_PATH /usr/lib/gcc/avr )
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
-SET(AVR_WARN "-Wall")
-SET(AVR_FREQ "F_CPU=16000000UL")
-SET(AVR_OPT "-fpack-struct -fshort-enums -funsigned-bitfields -funsigned-char -ffunction-sections")
-SET(AVR_CPU_TYPE "-mmcu=atmega328")
-SET(AVR_STD "-std=gnu99")
-
-add_definitions("-DF_CPU=16000000UL")
-add_definitions("-fpack-struct")
-add_definitions("-fshort-enums")
-#add_definitions("-Wall")
-#add_definitions("-Werror")
-add_definitions("-funsigned-bitfields")
-add_definitions("-funsigned-char")
-add_definitions("-ffunction-sections")
-add_definitions("-std=gnu99")
-add_definitions("-mmcu=atmega328")
 
 SET(AVR_SOURCES
 src/adc.c
@@ -49,12 +44,21 @@ ${h4r_libsersyncproto_SRC}
 add_executable(pan_tilt_avr_arduino_uno.hex
 ${AVR_SOURCES}
 )
+
+
+  set_target_properties(
+      pan_tilt_avr_arduino_uno.hex
+      PROPERTIES
+         COMPILE_FLAGS "-mmcu=${MCU_TYPE} -O${OPTIMIZATIONS} -DF_CPU=${FREQUENCY_HZ}UL -std=c99"
+         LINK_FLAGS "-mmcu=${MCU_TYPE} -Wl,--gc-sections -mrelax -Wl,-Map,pan_tilt_avr_arduino_uno.map"
+   )
   
 macro(convert_hex name)
 add_custom_command( 
 TARGET ${name}
 POST_BUILD 
-COMMAND avr-objcopy -O ihex ${name}
+COMMAND cp ${name} ${name}.elf
+COMMAND avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex ${name}
 COMMAND chmod -x ${name}
 WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
