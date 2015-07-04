@@ -167,6 +167,9 @@ void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 			{
 				button_tilt_down_pressed=true;
 			}
+
+			if(button_reset_lock>=0 && button_reset_lock<msg->buttons.size())
+				button_reset_pressed=msg->buttons[button_reset_lock];
 			mutex_buttons.unlock();
 		}
 		else
