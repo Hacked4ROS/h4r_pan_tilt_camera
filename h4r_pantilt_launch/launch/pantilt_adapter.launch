@@ -1,24 +1,35 @@
 <launch>
-	<arg name="camera_name" default="cam" />
+	
+<!-- Arguments -->	
+<arg name="ns" default="/" />
+<arg name="camera_name" default="cam" />
+<arg name="port" default="/dev/ttyACM0" />	
+<arg name="button" default="0" />
+
+
+<group ns="$(arg ns)">  
+	
 	<node pkg="h4r_pantilt_adapter" name="$(arg camera_name)_pantilt_adapter" type="pantilt_adapter_node" output="screen" required="true">
 		<param name="servo_rate" value="500"/> 
 		<param name="camera_name" value="$(arg camera_name)"/>
+		<param name="port" value="$(arg port)" />		
 	</node>
 	
 	<node pkg="h4r_pantilt_adapter" name="$(arg camera_name)_pantilt_joy" type="pantilt_joy_node" output="screen" required="true">
 		<param name="axis_pan" value="0" />
 		<param name="axis_tilt" value="1" />
-		<param name="is_button_axis" value="false" />		
-<!--		
+		<param name="is_button_axis" value="false" />
+				
+		<!--		
 		<param name="button_tilt_up" value="14"/>
 		<param name="button_tilt_down" value="16"/>
 		<param name="button_pan_up" value="15"/>
 		<param name="button_pan_down" value="17"/>
-				    -->
+		 -->
 
-		<param name="lock_is_switch" value="true" />
+		<param name="lock_is_switch" value="true" /><!-- if the button is a switch on the joystick-->
 		<param name="locked" value="true" />		
-		<param name="button_reset_lock" value="0" />
+		<param name="button_reset_lock" value="$(arg button)" />
 		<remap from="~/joy" to="/joy"/>
 	</node>
 		
@@ -28,14 +39,14 @@
 		<param name="robot_description"  command=
 	"$(find xacro)/xacro.py $(find h4r_pantilt_descriptions)/defs/v1_thermapp_camera.xacro camera_name:=$(arg camera_name)" />
 		
-	<node pkg="robot_state_publisher" type="state_publisher" 
+	<node pkg="robot_state_publisher" type="robot_state_publisher" output="screen"
 		  name="$(arg camera_name)_state_publisher">
 		  <param name="robot_description" value="robot_description"/>
-		<!-- joint_states are used in default -->
-		  <param name="publish_frequency" type="double" value="30.0"/>
-		  <param name="tf_prefix" type="string" value=""/>
+		  <param name="publish_frequency" value="30.0"/>
+		  <param name="tf_prefix"    value="$(arg ns)"/>
 	</node>
 		
+</group>
 		
 		
 </launch>
