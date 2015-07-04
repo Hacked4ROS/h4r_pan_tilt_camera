@@ -23,7 +23,7 @@ PanTiltAdapter::PanTiltAdapter()
 ,timeout(serial::Timeout::simpleTimeout(1000))
 ,send( boost::bind(&PanTiltAdapter::sendbyte, this, _1 ) )
 {
-	nh.param<string>("interface",port,"/dev/ttyACM0");
+	nh.param<string>("port",port,"/dev/ttyACM0");
 	nh.param<int>("servo_rate", servo_rate, 500);
 	nh.param<int>("pan_start",pan_target ,RESET_PAN_VALUE);
 	nh.param<int>("tilt_start",tilt_target ,RESET_TILT_VALUE);
