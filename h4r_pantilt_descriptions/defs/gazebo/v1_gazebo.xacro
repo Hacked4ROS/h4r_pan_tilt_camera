@@ -1,0 +1,25 @@
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+	   name="pan_tilt_thermapp_camera"
+	>
+	
+<gazebo>	
+	<plugin name="${camera_name}/H4RPanTiltGazebo"
+		filename="libh4r_pantilt_gazebo.so">
+		
+		<commandTopic>cmd_dir</commandTopic>
+		<servoTorque>1.0</servoTorque>	
+		<servoRate>500.0</servoRate>
+		<panStart>90</panStart>
+		<tiltStart>90</tiltStart>
+
+		<panJoint>${camera_name}/pantilt_pan_joint</panJoint>
+		<tiltJoint>${camera_name}/pantilt_tilt_joint</tiltJoint>
+							
+		<alwaysOn>true</alwaysOn>	    
+	</plugin>
+</gazebo>
+
+</robot>
