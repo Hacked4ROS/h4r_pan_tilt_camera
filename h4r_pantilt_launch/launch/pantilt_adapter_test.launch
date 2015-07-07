@@ -1,11 +1,13 @@
 <launch>
-<!-- args -->
+	
+<!-- Arguments -->	
 <arg name="ns" default="testns" />
 <arg name="camera_name" default="cam" />
+<arg name="port" default="/dev/ttyACM0" />	
+<arg name="button" default="0" />
 
 
 <!-- global -->
-<include file="$(find h4r_rapid_robot_xacros)/launch/empty_world.launch"/>
 <node pkg="joy" name="joystick" type="joy_node" />	
 	  	
 
@@ -26,9 +28,13 @@
 		<arg name="ns" value="$(arg ns)" />		
 	</include>
 	
-	<node name="spawn_pantilt" pkg="gazebo_ros" type="spawn_model" 
-    	  args="-z 0.01 -x 0 -urdf -param /robot_description -model robot_description" 
-    	  respawn="false" />
+	
+	<node pkg="h4r_pantilt_adapter" name="$(arg camera_name)_pantilt_adapter" type="pantilt_adapter_node" output="screen" required="true">
+		<param name="servo_rate" value="500"/> 
+		<param name="camera_name" value="$(arg camera_name)"/>
+		<param name="port" value="$(arg port)" />
+		<remap from="~/cmd_dir" to="$(arg camera_name)/cmd_dir"/>		
+	</node>
     	  	
 	<include file="$(find h4r_pantilt_launch)/launch/sub/pantilt_joy_button_axis.launch" />
 </group>
