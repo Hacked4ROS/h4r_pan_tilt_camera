@@ -5,7 +5,6 @@ project(h4r_pantilt_descriptions)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  xacro
 )
 
 ## System dependencies are found with CMake's conventions
