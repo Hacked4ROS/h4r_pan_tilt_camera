@@ -3,7 +3,7 @@
 
 	<group ns="testns" clear_params="true">  
 
-    <node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_adapter)/rviz/pan_tilt_view.rviz" required="true" />	
+    <node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_launch)/rviz/pantilt_adapter_sim.rviz" required="true" />	
 		
 	<param name="robot_description" command="$(find xacro)/xacro '$(find h4r_pantilt_descriptions)/defs/v1_delock_96000.xacro'" />
     <node pkg="robot_state_publisher" type="state_publisher" 
