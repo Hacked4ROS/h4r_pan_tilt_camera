@@ -1,0 +1,11 @@
+<launch>
+	<arg name="ns" default="/" />
+	<arg name="robot_description" default="/robot_description" />
+	
+	<node pkg="robot_state_publisher" type="robot_state_publisher" output="screen"
+		  name="robot_state_publisher">
+		  <param name="robot_description" value="$(arg robot_description)"/>
+		  <param name="publish_frequency" value="30.0"/>
+		  <param name="tf_prefix"    value="$(arg ns)"/>
+	</node>
+</launch>

@@ -1,34 +1,37 @@
 <launch>
-	<include file="$(find h4r_rapid_robot_xacros)/launch/empty_world.launch"/>
+<!-- args -->
+<arg name="ns" default="testns" />
+<arg name="camera_name" default="cam" />
 
-	<group ns="testns" clear_params="true">  
 
-    <node pkg="rviz" type="rviz" name="rviz" args=" -d $(find h4r_pantilt_launch)/rviz/pantilt_adapter_sim.rviz" required="true" />	
+<!-- global -->
+<include file="$(find h4r_rapid_robot_xacros)/launch/empty_world.launch"/>
+<node pkg="joy" name="joystick" type="joy_node" />	
+	  	
+
+<!-- description -->
+<param name="robot_description"  command=
+	"$(find xacro)/xacro.py $(find h4r_pantilt_descriptions)/defs/v1_delock_96000.xacro camera_name:=$(arg camera_name)" />
 		
-	<param name="robot_description" command="$(find xacro)/xacro '$(find h4r_pantilt_descriptions)/defs/v1_delock_96000.xacro'" />
-    <node pkg="robot_state_publisher" type="state_publisher" 
-		  name="robot_state_publisher">
-		<!-- joint_states and robot_description are used in default -->
-		<param name="publish_frequency" type="double" value="30.0"/>
-		<param name="tf_prefix" type="string" value="testns"/>
-	</node> 
-    	
-    	
-	<node name="spawn_test_bot" pkg="gazebo_ros" type="spawn_model" 
-    	  args="-z 0.01 -x 0 -urdf -param robot_description -model robot_description" 
+<!-- RViz -->
+<node pkg="rviz" type="rviz" name="rviz" 
+      args=" -d $(find h4r_pantilt_launch)/rviz/pantilt_adapter_sim.rviz" 
+	  required="true" />	
+
+<!-- namespace -->
+<group ns="$(arg ns)" clear_params="true">  
+
+	
+    <include file="$(find h4r_pantilt_launch)/launch/sub/pantilt_robot_state.launch">
+		<arg name="ns" value="$(arg ns)" />		
+	</include>
+	
+	<node name="spawn_pantilt" pkg="gazebo_ros" type="spawn_model" 
+    	  args="-z 0.01 -x 0 -urdf -param /robot_description -model robot_description" 
     	  respawn="false" />
- 
     	  	
-    	  	
-    <node pkg="joy" name="joystick" type="joy_node" />	  	
-    <node pkg="h4r_pantilt_adapter" name="pantilt_cam0_joy" type="pantilt_joy_node" output="screen" required="true">
-		<param name="axis_pan" value="0" />
-		<param name="axis_tilt" value="1" />
-		<param name="is_button_axis" value="false" />		
-		<param name="lock_is_switch" value="true" />
-		<param name="locked" value="true" />		
-		<param name="button_reset_lock" value="0" />
-		<remap from="~/joy" to="/joy"/>
-	</node>
-	</group>
+	<include file="$(find h4r_pantilt_launch)/launch/sub/pantilt_joy_button_axis.launch" />
+</group>
+
+
 </launch>

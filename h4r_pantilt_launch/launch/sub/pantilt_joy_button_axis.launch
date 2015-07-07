@@ -1,0 +1,23 @@
+<launch>	
+	<arg name="axisX" default="0" />
+	<arg name="axisY" default="1" />
+	<arg name="button" default="0" />
+	<arg name="camera_name" default="cam" />
+	
+	<node 
+		pkg="h4r_pantilt_adapter" 
+		name="pantilt_joy" 
+		type="pantilt_joy_node" 
+		output="screen" 
+		required="true">
+		
+		<param name="axis_pan" value="$(arg axisX)" />
+		<param name="axis_tilt" value="$(arg axisY)" />
+		<param name="is_button_axis" value="true" />
+		<param name="lock_is_switch" value="false" />
+		<param name="locked" value="false" />		
+		<param name="button_reset_lock" value="$(arg button)" />
+		<remap from="~/joy" to="/joy"/>
+		<remap from="~/cmd_dir" to="$(arg camera_name)/cmd_dir"/>
+	</node>
+</launch>

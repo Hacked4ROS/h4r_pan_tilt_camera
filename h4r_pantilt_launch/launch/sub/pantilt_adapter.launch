@@ -1,0 +1,15 @@
+<launch>
+	
+<arg name="port" default="/dev/ttyACM0" />	
+	
+	<node pkg="h4r_pantilt_adapter" 
+		  name="pantilt_adapter_node" 
+		  type="pantilt_adapter_node" 
+		  output="screen" 
+		  required="true">
+		<param name="servo_rate" value="500"/> 
+		<param name="port" value="$(arg port)" />		
+		<param name="auto_ns" value="true" />
+	</node>
+	
+</launch>

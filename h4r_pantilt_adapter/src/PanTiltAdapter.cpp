@@ -16,7 +16,7 @@ namespace pan_tilt_adapter {
 PanTiltAdapter::PanTiltAdapter()
 :n()
 ,nh("~")
-,sub_quat(n.subscribe("cmd_dir", 1000, &PanTiltAdapter::QuaternionCallback, this ))
+,sub_quat(nh.subscribe("cmd_dir", 1000, &PanTiltAdapter::QuaternionCallback, this ))
 ,pub_joint(n.advertise<sensor_msgs::JointState>("joint_states",1000))
 ,tilt(RESET_PAN_VALUE)
 ,pan(RESET_TILT_VALUE)

@@ -9,7 +9,7 @@
 	<plugin name="${camera_name}/H4RPanTiltGazebo"
 		filename="libh4r_pantilt_gazebo.so">
 		
-		<commandTopic>cmd_dir</commandTopic>
+		<commandTopic>${camera_name}/cmd_dir</commandTopic>
 		<servoTorque>1.0</servoTorque>	
 		<servoRate>500.0</servoRate>
 		<panStart>90</panStart>
