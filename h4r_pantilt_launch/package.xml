@@ -44,7 +44,7 @@
   <run_depend>h4r_pantilt_adapter</run_depend>
   <run_depend>h4r_pantilt_descriptions</run_depend>
   <run_depend>h4r_pantilt_gazebo</run_depend>
-
+  <run_depend>h4r_rapid_robot_xacros</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
