@@ -2,30 +2,47 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro"
-	   name="head_thermapp_v1"
+	   name="head_delock_96000_v1"
 	>
-		<link name="${camera_name}/pantilt_head_link">	
-			
-			<visual> 	  	
-				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/delock_96000_camera_mount_v1.dae"  />
-				</geometry>
-			</visual>
-			<collision name="${camera_name}/pantilt_head_link_collision">
-			    <origin rpy="${rr_const_pi/2} 0 ${rr_const_pi/2*3}" xyz="-0.0203 0.0084 0.0"/>
-				<geometry>	
-					<box size="0.027 0.01 0.06" />
-				</geometry>	
-			</collision>
-			<inertial>
-				<mass value="0.010" />
-				<inertia ixx="4.481" 
-						 iyy="2.930" 
-						 izz="5.819" 
-				         iyz="-0.083" 
-				         ixy="0.049" 
-				         ixz="0.317" />
-			</inertial>
-		</link>	
+	
+		
+	<xacro:include filename="$(find h4r_hardware_models)/defs/models.xacro"/>
+		
+	<!-- camera model -->
+	<xacro:hw_models_delock_96000
+			 camera_name="${camera_name}"
+			 frame_id="${camera_name}" 
+	 />  	
+	
+	<joint name="${camera_name}/pantilt_head_camera_joint" type="fixed">
+	  <origin rpy="-${rr_const_pi/2} 0 -${rr_const_pi}" xyz="-0.0223 0.0218 0"/>
+      <parent link="${camera_name}/pantilt_head_link"/>
+      <child link="${camera_name}/mesh"/>
+    </joint>
+
+	 	
+	<!--pantilt head--> 			
+	<link name="${camera_name}/pantilt_head_link">
+		<visual> 	  	
+			<geometry>					
+		  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/delock_96000_camera_mount_v1.dae"  />
+			</geometry>
+		</visual>
+		<collision name="${camera_name}/pantilt_head_link_collision">
+		    <origin rpy="${rr_const_pi/2} 0 ${rr_const_pi/2*3}" xyz="-0.0203 0.0084 0.0"/>
+			<geometry>	
+				<box size="0.027 0.01 0.06" />
+			</geometry>	
+		</collision>
+		<inertial>
+			<mass value="0.010" />
+			<inertia ixx="4.481" 
+					 iyy="2.930" 
+					 izz="5.819" 
+			         iyz="-0.083" 
+			         ixy="0.049" 
+			         ixz="0.317" />
+		</inertial>
+	</link>	
 		
 </robot>

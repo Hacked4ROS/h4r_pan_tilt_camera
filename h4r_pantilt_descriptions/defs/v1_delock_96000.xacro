@@ -7,9 +7,9 @@
 	
 	<xacro:arg name="camera_name" default="cam"/>
 	<property name="camera_name" value="$(arg camera_name)" />
+	
 	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/rapid_robot.xacro"/>
 	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/base/base_v1.xacro"/>
-
 
 	<joint name="${camera_name}/pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
