@@ -1,0 +1,36 @@
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+	   name="pantilt_v1"
+	>
+
+<xacro:macro name="h4r_pantilt_v1" 
+			 params="camera_name" >
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/base/base_v1.xacro"/>
+
+	<joint name="${camera_name}/pantilt_pan_joint" type="revolute">
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="${rr_const_pi}" effort="9" velocity="1" />      
+      <origin xyz="0 0 0.0027" rpy="0 0 0" />
+      <parent link="${camera_name}/pantilt_base_link"/>
+      <child link="${camera_name}/pantilt_center_link"/>
+    </joint>
+
+    <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/center/center_v1.xacro"/>
+		
+	<joint name="${camera_name}/pantilt_tilt_joint" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit lower="0" upper="${rr_const_pi}" effort="9" velocity="1" />
+      <origin xyz="0.0223 0 0.0455" rpy="0 0 0" />
+      <parent link="${camera_name}/pantilt_center_link"/>
+      <child link="${camera_name}/pantilt_head_link"/>
+    </joint>
+		
+    <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/head/head_delock_96000_v1.xacro"/>
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/gazebo/v1_gazebo.xacro"/>
+  	
+</xacro:macro>
+		
+
+</robot>

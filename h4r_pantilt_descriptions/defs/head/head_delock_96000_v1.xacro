@@ -4,10 +4,7 @@
        xmlns:xacro="http://ros.org/wiki/xacro"
 	   name="head_delock_96000_v1"
 	>
-	
-		
-	<xacro:include filename="$(find h4r_hardware_models)/defs/models.xacro"/>
-		
+			
 	<!-- camera model -->
 	<xacro:hw_models_delock_96000
 			 camera_name="${camera_name}"

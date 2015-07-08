@@ -1,0 +1,31 @@
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+	   name="pantilt_robot">
+	<!-- import the robot from h4r_rapid_robot_xacros -->
+	<xacro:include filename="$(find h4r_hardware_models)/defs/models.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/rapid_robot.xacro"/>
+
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/properties.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/chassis.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/caster.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/drive.xacro"/>
+	
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/camera.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/imu.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/laser.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/bumpers.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/test_robots/diff_drive_bot/gps.xacro"/>
+
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/robot_macro/m_v1_delock96000.xacro"/>
+
+		
+    <joint name="robot_pantilt_joint" type="fixed">
+	  <origin rpy="0 0 0" xyz="0.2 0 ${chassis_center_z+chassis_height/2}"/>
+      <parent link="base_link"/>
+      <child link="cam1/pantilt_base_link"/>
+    </joint>
+		
+	<xacro:h4r_pantilt_v1 camera_name="cam1" />
+</robot>
