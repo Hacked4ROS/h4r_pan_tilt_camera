@@ -1,19 +1,28 @@
 <launch>
-	<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
-	<param name="robot_description"  command=
-	"$(find xacro)/xacro.py $(find h4r_pantilt_launch)/def/diff_drive_pantilt_bot.xacro" />
+	
+<arg name="ns" default="PT1000"/>
+<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+<param name="robot_description"  command=
+"$(find xacro)/xacro.py $(find h4r_pantilt_launch)/def/diff_drive_pantilt_bot.xacro" />
+<node pkg="joy" name="joystick" type="joy_node" />	
+	
 
-	<node pkg="robot_state_publisher" type="state_publisher" 
-		  name="robot_state_publisher">
-		<!-- joint_states and robot_description are used in default -->
-		<param name="publish_frequency" type="double" value="30.0"/>
-		<param name="tf_prefix" type="string" value=""/>
-	</node>
+<group ns="$(arg ns)">
+		
+    <include file="$(find h4r_pantilt_launch)/launch/sub/pantilt_robot_state.launch">
+		<arg name="ns" value="$(arg ns)" />		
+	</include>
 	
 	<node name="spawn_pantilt_bot" pkg="gazebo_ros" type="spawn_model" 
-	      args="-z 0.1 -urdf -param robot_description -model Robot"
+	      args="-z 0.1 -urdf -param /robot_description -model $(arg ns)"
 		  required="false" />
 	
 	<node name="rviz" pkg="rviz" type="rviz" 
-	args="-d $(find h4r_rapid_robot_xacros)/rviz/rplidar.rviz" />
+	args="-d $(find h4r_pantilt_launch)/rviz/pantilt_robot.rviz" />
+	
+	<include file="$(find h4r_pantilt_launch)/launch/sub/pantilt_joy_button_axis.launch" >
+		<arg name="camera_name" value="cam1"/>
+		
+	</include>
+</group>	
 </launch>
