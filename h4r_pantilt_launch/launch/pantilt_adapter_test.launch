@@ -13,7 +13,7 @@
 
 <!-- description -->
 <param name="robot_description"  command=
-	"$(find xacro)/xacro.py $(find h4r_pantilt_descriptions)/defs/v1_delock_96000.xacro camera_name:=$(arg camera_name)" />
+	"$(find xacro)/xacro.py $(find h4r_pantilt_descriptions)/def/v1_delock_96000.xacro camera_name:=$(arg camera_name)" />
 		
 <!-- RViz -->
 <node pkg="rviz" type="rviz" name="rviz" 

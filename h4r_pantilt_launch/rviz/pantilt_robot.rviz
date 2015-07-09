@@ -30,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Image
 Visualization Manager:
   Class: ""
   Displays:
@@ -68,7 +68,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /testns/cam_plugin/image_raw
+      Image Topic: /PT1000/cam1/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0

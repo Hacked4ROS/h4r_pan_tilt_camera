@@ -8,9 +8,9 @@
 	<xacro:arg name="camera_name" default="cam"/>
 	<property name="camera_name" value="$(arg camera_name)" />
 
-	<xacro:include filename="$(find h4r_hardware_models)/defs/models.xacro"/>
-	<xacro:include filename="$(find h4r_rapid_robot_xacros)/defs/rapid_robot.xacro"/>
-	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/robot_macro/m_v1_delock96000.xacro"/>
+	<xacro:include filename="$(find h4r_hardware_models)/def/models.xacro"/>
+	<xacro:include filename="$(find h4r_rapid_robot_xacros)/def/rapid_robot.xacro"/>
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/def/robot_macro/m_v1_delock96000.xacro"/>
 		
 	<xacro:h4r_pantilt_v1 
 		camera_name="$(arg camera_name)" />

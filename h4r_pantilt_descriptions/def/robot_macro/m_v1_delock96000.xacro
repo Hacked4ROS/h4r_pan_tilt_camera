@@ -7,7 +7,7 @@
 
 <xacro:macro name="h4r_pantilt_v1" 
 			 params="camera_name" >
-	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/base/base_v1.xacro"/>
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/def/base/base_v1.xacro"/>
 
 	<joint name="${camera_name}/pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
@@ -17,7 +17,7 @@
       <child link="${camera_name}/pantilt_center_link"/>
     </joint>
 
-    <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/center/center_v1.xacro"/>
+    <xacro:include filename="$(find h4r_pantilt_descriptions)/def/center/center_v1.xacro"/>
 		
 	<joint name="${camera_name}/pantilt_tilt_joint" type="revolute">
       <axis xyz="1 0 0"/>
@@ -27,8 +27,8 @@
       <child link="${camera_name}/pantilt_head_link"/>
     </joint>
 		
-    <xacro:include filename="$(find h4r_pantilt_descriptions)/defs/head/head_delock_96000_v1.xacro"/>
-	<xacro:include filename="$(find h4r_pantilt_descriptions)/defs/gazebo/v1_gazebo.xacro"/>
+    <xacro:include filename="$(find h4r_pantilt_descriptions)/def/head/head_delock_96000_v1.xacro"/>
+	<xacro:include filename="$(find h4r_pantilt_descriptions)/def/gazebo/v1_gazebo.xacro"/>
   	
 </xacro:macro>
 		
