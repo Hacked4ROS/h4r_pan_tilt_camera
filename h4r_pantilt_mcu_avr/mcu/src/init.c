@@ -10,7 +10,6 @@
 void init()
 {
 	uart_init();
-	adc_init();
 	pwm_init();
 	sei();
 }
