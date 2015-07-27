@@ -20,17 +20,15 @@
 #include "uart.h"
 
 #include <sersyncproto.h>
+#include <util/setbaud.h>
 #include "pwm.h"
 
 
-void uart_sendByte(uint8_t byte)
-{
-	//Wait for empty output buffer
-	while (!( UCSR0A & (1<<UDRE0)));
-	UDR0 = byte;
-}
-
-#include <util/setbaud.h>
+static const uint8_t cmds[]=CMD_ARRAY_INIT;
+static const uint8_t payload_len[]=PAYLOAD_LEN_ARRAY_INIT;
+static const uint8_t header[]=HEADER_ARRAY_INIT;
+static payload_t payload_buffer;
+INIT_SERSYNCPROTO_DATA(data, cmds, payload_len, header, &payload_buffer);
 
 void uart_init(void)
 {
@@ -44,17 +42,20 @@ void uart_init(void)
 
     UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);   	/* Enable RX and TX */
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); 				/* 8-bit data */
+
+
 }
 
 
+void uart_sendByte(uint8_t byte)
+{
+	//Wait for empty output buffer
+	while (!( UCSR0A & (1<<UDRE0)));
+	UDR0 = byte;
+}
 
 ISR(USART_RX_vect)
 {
-	static const uint8_t cmds[]=CMD_ARRAY_INIT;
-	static const uint8_t payload_len[]=PAYLOAD_LEN_ARRAY_INIT;
-	static const uint8_t header[]=HEADER_ARRAY_INIT;
-	static payload_t payload_buffer;
-	INIT_SERSYNCPROTO_DATA(data, cmds, payload_len, header, &payload_buffer);
 	uint8_t cur_byte=UDR0;
 	if(sersyncproto_rec(&data,cur_byte))
 	{

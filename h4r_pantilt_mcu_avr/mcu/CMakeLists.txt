@@ -11,10 +11,10 @@ include_directories(
     include
 )
 
-
+message("Building AVR Code...")
 SET(MCU_TYPE atmega328p)
 SET(FREQUENCY_HZ 16000000)
-SET(OPTIMIZATIONS 0)
+SET(OPTIMIZATIONS 2)
 SET(STANDARD gnu99)
 
 

@@ -2,16 +2,16 @@
 #define PANTILTADAPTER_H_
 
 #include <inttypes.h>
-#include <ros/ros.h>
 #include <string>
-#include <serial/serial.h>
-#include <sersyncproto.h>
-#include <boost/bind.hpp>
-#include <geometry_msgs/Quaternion.h>
-#include <sensor_msgs/JointState.h>
 #include <cmath>
 #include <cfloat>
+#include <boost/bind.hpp>
+#include <ros/ros.h>
 #include <tf/tf.h>
+#include <serial/serial.h>
+#include <geometry_msgs/Quaternion.h>
+#include <sensor_msgs/JointState.h>
+#include <sersyncproto.h>
 #include <h4r_pantilt_proto/protocol_definition.h>
 
 namespace pan_tilt_adapter {

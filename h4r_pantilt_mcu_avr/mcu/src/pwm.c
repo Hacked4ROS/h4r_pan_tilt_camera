@@ -6,6 +6,7 @@
  */
 
 #include "pwm.h"
+#include <util/delay.h>
 #define SERVO_FACT ((uint16_t) (servo_max-servo_min)*100/180)
 #define SERVO_VALUE(DEG) SERVO_FACT*DEG/100+servo_min
 void pwm_init()
@@ -40,9 +41,9 @@ void pwm_init()
 
 	//RESET Position to center
 	OCR1A=SERVO_VALUE(90);
-	for (int t = 0; t < 1000; ++t);
+	_delay_ms(2000);
 	OCR1B=SERVO_VALUE(90);
-	for (int t = 0; t < 1000; ++t);
+	_delay_ms(2000);
 }
 
 void servo0(uint8_t pwm_value)
