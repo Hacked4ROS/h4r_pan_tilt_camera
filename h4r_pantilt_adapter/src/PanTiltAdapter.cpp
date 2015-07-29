@@ -193,9 +193,6 @@ void PanTiltAdapter::run()
 		rate.sleep();
 	}
 }
-
-
-
 } /* namespace pan_tilt_adapter */
 
 
