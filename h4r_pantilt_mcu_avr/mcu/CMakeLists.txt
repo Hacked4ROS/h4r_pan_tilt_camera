@@ -32,8 +32,6 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 
 SET(AVR_SOURCES
-src/adc.c
-src/globals.c
 src/init.c
 src/main.c
 src/pwm.c
