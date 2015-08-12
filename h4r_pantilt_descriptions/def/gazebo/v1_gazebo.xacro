@@ -11,7 +11,7 @@
 		
 		<commandTopic>${camera_name}/cmd_dir</commandTopic>
 		<servoTorque>1.0</servoTorque>	
-		<servoRate>500.0</servoRate>
+		<servoRate>125</servoRate>
 		<panStart>90</panStart>
 		<tiltStart>90</tiltStart>
 

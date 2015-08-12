@@ -6,45 +6,45 @@
 	>
 	
 					
-	<link name="${camera_name}/pantilt_center_link">
-			<visual> 	  	
-				<geometry>					
-			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/center_v1.dae"  />
-				</geometry>
-			</visual>
-
-			<collision name="${camera_name}/pantilt_center_link_collision">
-				<origin rpy="0 0 0" xyz="0 0 0.0026"/>
-				<geometry>	
-					<cylinder length="0.0018" radius="0.040"/>
-				</geometry>	
-			</collision>
-
-			<inertial>		
-				<mass value="0.025" />
-				<inertia ixx="9.325" 
-						 iyy="11.911" 
-						 izz="7.028" 
-				         iyz="0.0" 
-				         ixy="0.0" 
-				         ixz="1.025" />
-			</inertial>
-	</link>	
+<link name="${camera_name}/pantilt_center_link">
+	<visual> 	  	
+		<geometry>					
+	  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/center_v1.dae"  />
+		</geometry>
+	</visual>
 	
+	<collision name="${camera_name}/pantilt_center_link_collision">
+		<origin rpy="0 0 0" xyz="0 0 0.0026"/>
+		<geometry>	
+			<cylinder length="0.0018" radius="0.040"/>
+		</geometry>	
+	</collision>
 	
-    <joint name="${camera_name}/pantilt_center_col2_joint" type="fixed">
-	  <origin rpy="0 0 0" xyz="-0.00340 0 0.02955"/>
-      <parent link="${camera_name}/pantilt_center_link"/>
-      <child link="${camera_name}/pantilt_center_col_link"/>
-    </joint>
-    
-	<link name="${camera_name}/pantilt_center_col_link">
-		<collision name="${camera_name}/pantilt_center_link_collision2">
-			<geometry>	
-				<box size="0.054 0.016 0.052" />
-			</geometry>	
-		</collision>	
-	</link>
-		
+	<inertial>		
+		<mass value="0.025" />
+		<inertia ixx="9.325" 
+				 iyy="11.911" 
+				 izz="7.028" 
+		         iyz="0.0" 
+		         ixy="0.0" 
+		         ixz="1.025" />
+	</inertial>
+</link>	
+
+
+<joint name="${camera_name}/pantilt_center_col2_joint" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.00340 0 0.02955"/>
+  <parent link="${camera_name}/pantilt_center_link"/>
+  <child link="${camera_name}/pantilt_center_col_link"/>
+</joint>
+
+<link name="${camera_name}/pantilt_center_col_link">
+	<collision name="${camera_name}/pantilt_center_link_collision2">
+		<geometry>	
+			<box size="0.054 0.016 0.052" />
+		</geometry>	
+	</collision>	
+</link>
+	
 		
 </robot>

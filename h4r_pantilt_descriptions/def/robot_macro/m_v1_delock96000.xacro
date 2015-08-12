@@ -11,7 +11,7 @@
 
 	<joint name="${camera_name}/pantilt_pan_joint" type="revolute">
       <axis xyz="0 0 1"/>
-      <limit lower="0" upper="${rr_const_pi}" effort="9" velocity="1" />      
+      <limit lower="0" upper="${rr_const_pi}" effort="0.1" velocity="1" />      
       <origin xyz="0 0 0.0027" rpy="0 0 0" />
       <parent link="${camera_name}/pantilt_base_link"/>
       <child link="${camera_name}/pantilt_center_link"/>
@@ -21,7 +21,7 @@
 		
 	<joint name="${camera_name}/pantilt_tilt_joint" type="revolute">
       <axis xyz="1 0 0"/>
-      <limit lower="0" upper="${rr_const_pi}" effort="9" velocity="1" />
+      <limit lower="0" upper="${rr_const_pi}" effort="0.1" velocity="1" />
       <origin xyz="0.0223 0 0.0455" rpy="0 0 0" />
       <parent link="${camera_name}/pantilt_center_link"/>
       <child link="${camera_name}/pantilt_head_link"/>

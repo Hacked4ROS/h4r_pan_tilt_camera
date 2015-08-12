@@ -2,33 +2,31 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro"
-	   name="pantilt_base_v1"
-	>
+	   name="pantilt_base_v1">
 
-	     
-		 <link name="${camera_name}/pantilt_base_link">
-			<visual> 	  	
-				<origin rpy="0 0 0" xyz="0 0 0"/>
-				<geometry>
-			  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/base_v1.dae"  />
-				</geometry>
-			</visual>
+ <link name="${camera_name}/pantilt_base_link">
+	<visual> 	  	
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+		<geometry>
+	  		<mesh filename="package://h4r_pantilt_descriptions/mesh/dae/base_v1.dae"  />
+		</geometry>
+	</visual>
 
-			<collision name="${camera_name}/pantilt_base_link_collision">
-				<origin rpy="0 0 0" xyz="0 0 0.0009"/>
-				<geometry>	
-					<cylinder length="0.0018" radius="0.045"/>
-				</geometry>	
-			</collision>
+	<collision name="${camera_name}/pantilt_base_link_collision">
+		<origin rpy="0 0 0" xyz="0 0 0.0009"/>
+		<geometry>	
+			<cylinder length="0.0018" radius="0.045"/>
+		</geometry>	
+	</collision>
 
-			<inertial>
-				<mass value="0.010" />
-				<inertia ixx="3.8" 
-						 iyy="3.8" 
-						 izz="7.6" 
-				         iyz="0.0" 
-				         ixy="0.0" 
-				         ixz="0.0" />
-			</inertial>
-		</link>	
+	<inertial>
+		<mass value="0.010" />
+		<inertia ixx="3.8" 
+				 iyy="3.8" 
+				 izz="7.6" 
+		         iyz="0.0" 
+		         ixy="0.0" 
+		         ixz="0.0" />
+	</inertial>
+</link>	
 </robot>
