@@ -8,23 +8,32 @@
 #ifndef H4RPANTILTGAZEBO_H_
 #define H4RPANTILTGAZEBO_H_
 
+//Plugin includes
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
 #include <gazebo/common/common.hh>
-
 #include <gazebo_plugins/gazebo_ros_utils.h>
 
-#include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
-#include <geometry_msgs/Quaternion.h>
-#include <sensor_msgs/JointState.h>
+//Model includes
 #include <sdf/sdf.hh>
+
+//ROS basic includes
+#include <ros/ros.h>
 #include <ros/callback_queue.h>
 #include <ros/advertise_options.h>
-#include <tf/tf.h>
 
+//TF includes
+#include <tf/tf.h>
+#include <tf/transform_broadcaster.h>
+
+//Messages
+#include <geometry_msgs/Quaternion.h>
+#include <sensor_msgs/JointState.h>
+
+//Boost thread and function binding
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
+
 
 #include <stdio.h>
 
@@ -35,51 +44,92 @@ namespace gazebo
     public:
 	virtual ~H4RPanTiltGazebo();
 
-
+	///Model load function (the actual constructor)
 	void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
+
+	///Update function for the model
     void Update(const common::UpdateInfo &info);
+
+    /**
+     * Reset function for when the simulation is reset,
+     * it resets the model to be centered in pan and tilt.
+     */
     void Reset();
 
     private:
-    physics::ModelPtr model_;
-	GazeboRosPtr gazebo_ros_;
 
-    event::ConnectionPtr updateConnection;
-
-	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
-	void moveJoints();
-
-	ros::Subscriber sub_quat_;
-	ros::Publisher pub_joint_;
-
+    ///Pointer to model
 	physics::ModelPtr parent_;
 
+	///Pointer to Gazebo helper class
+	GazeboRosPtr gazebo_ros_;
+
+	///Model update event creation
+    event::ConnectionPtr updateConnection;
+
+    ///Pointers to the model joints
 	std::vector<physics::JointPtr> joints_;
 
-	std::string namespace_;
-	std::string command_topic_;
-	std::string base_frame_;
+    ///Quaternion subscriber
+	ros::Subscriber sub_quat_;
+
+	/**
+	 * Callback for Quaternion message
+	 * @param cmd_msg The quaternion message
+	 */
+	void cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& cmd_msg );
+
+
+	///Joint state publisher
+	ros::Publisher pub_joint_;
+
+	///Joint state message
 	sensor_msgs::JointState joint_state_;
 
+	///Namespace parameter
+	std::string namespace_;
 
+	///Command topic name
+	std::string command_topic_;
+
+	///Base frame name
+	std::string base_frame_;
+
+	///joint torque setting
 	double joint_torque_;
-	int pan_target_;
-	int tilt_target_;
-	int tilt_;
-	int pan_;
 
+	///Servo rate setting
 	double servo_rate_;
 
-    double tilt_spd_;
-    double pan_spd_;
+	///Setpoint for pan
+	int pan_target_;
 
-	// Custom Callback Queue
+	///Setpoint for tilt
+	int tilt_target_;
+
+	///current tilt state
+	int tilt_;
+
+	///current pan state
+	int pan_;
+
+    ///time of last update for generating the loop rate
+    common::Time last_update_;
+
+	///Custom Callback Queue
 	ros::CallbackQueue queue_;
+
+	///Queue callback caller (ros spin)
 	boost::thread callback_queue_thread_;
+
+	///Queue callback thread function
 	void QueueThread();
+
+	///Interrupt variable for ending
 	bool alive_;
 
-	common::Time last_update_;
+	///Update function for joint positions
+	void moveJoints();
   };
 
 }
