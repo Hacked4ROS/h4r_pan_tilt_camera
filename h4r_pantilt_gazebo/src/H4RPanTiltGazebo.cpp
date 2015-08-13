@@ -17,30 +17,17 @@ namespace gazebo
 		TILT
 	};
 
-
-	H4RPanTiltGazebo::~H4RPanTiltGazebo()
-	{
-	    alive_ = false;
-	    queue_.clear();
-	    queue_.disable();
-	    gazebo_ros_->node()->shutdown();
-	    callback_queue_thread_.join();
-	}
-
 	void H4RPanTiltGazebo::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     {
       parent_ = _parent;
       gazebo_ros_ = GazeboRosPtr
               ( new GazeboRos (_parent, _sdf, "H4RPanTiltGazebo" ) );
 
-
-
       gazebo_ros_->isInitialized();
 
       gazebo_ros_->getParameter<std::string> (
               command_topic_, "commandTopic", "cmd_dir" );
-      gazebo_ros_->getParameter<std::string>
-                           ( base_frame_, "baseFrame", "pantilt_base_frame" );
+
       gazebo_ros_->getParameter<double> ( joint_torque_, "servoTorque", 5.0 );
       gazebo_ros_->getParameter<double> ( servo_rate_, "servoRate", 5.0 );
       gazebo_ros_->getParameter<int> ( pan_target_, "panStart", 90 );
@@ -53,7 +40,6 @@ namespace gazebo
               ( parent_, "tiltJoint", "pantilt_tilt_joint" );
       joints_[PAN]->SetMaxForce ( 0, joint_torque_ );
       joints_[TILT]->SetMaxForce ( 0, joint_torque_ );
-
 
 
       alive_ = true;
@@ -90,6 +76,14 @@ namespace gazebo
           boost::bind(&H4RPanTiltGazebo::Update, this, _1));
     }
 
+    H4RPanTiltGazebo::~H4RPanTiltGazebo()
+    {
+        alive_ = false;
+        queue_.clear();
+        queue_.disable();
+        gazebo_ros_->node()->shutdown();
+        callback_queue_thread_.join();
+    }
 
     void H4RPanTiltGazebo::Update(const common::UpdateInfo & /*_info*/)
     {

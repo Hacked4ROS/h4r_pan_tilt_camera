@@ -89,8 +89,8 @@ namespace gazebo
 	///Command topic name
 	std::string command_topic_;
 
-	///Base frame name
-	std::string base_frame_;
+
+
 
 	///joint torque setting
 	double joint_torque_;
