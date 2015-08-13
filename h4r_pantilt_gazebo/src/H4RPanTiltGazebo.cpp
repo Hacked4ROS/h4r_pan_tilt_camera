@@ -30,20 +30,27 @@ namespace gazebo
 	void H4RPanTiltGazebo::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     {
       parent_ = _parent;
-      gazebo_ros_ = GazeboRosPtr ( new GazeboRos (_parent, _sdf, "H4RPanTiltGazebo" ) );
+      gazebo_ros_ = GazeboRosPtr
+              ( new GazeboRos (_parent, _sdf, "H4RPanTiltGazebo" ) );
+
+
 
       gazebo_ros_->isInitialized();
 
-      gazebo_ros_->getParameter<std::string> ( command_topic_, "commandTopic", "cmd_dir" );
-      gazebo_ros_->getParameter<std::string> ( base_frame_, "baseFrame", "pantilt_base_frame" );
+      gazebo_ros_->getParameter<std::string> (
+              command_topic_, "commandTopic", "cmd_dir" );
+      gazebo_ros_->getParameter<std::string>
+                           ( base_frame_, "baseFrame", "pantilt_base_frame" );
       gazebo_ros_->getParameter<double> ( joint_torque_, "servoTorque", 5.0 );
       gazebo_ros_->getParameter<double> ( servo_rate_, "servoRate", 5.0 );
       gazebo_ros_->getParameter<int> ( pan_target_, "panStart", 90 );
       gazebo_ros_->getParameter<int> ( tilt_target_, "tiltStart", 90 );
 
       joints_.resize ( 2 );
-      joints_[PAN] = gazebo_ros_->getJoint ( parent_, "panJoint", "pantilt_pan_joint" );
-      joints_[TILT] = gazebo_ros_->getJoint ( parent_, "tiltJoint", "pantilt_tilt_joint" );
+      joints_[PAN] = gazebo_ros_->getJoint
+              ( parent_, "panJoint", "pantilt_pan_joint" );
+      joints_[TILT] = gazebo_ros_->getJoint
+              ( parent_, "tiltJoint", "pantilt_tilt_joint" );
       joints_[PAN]->SetMaxForce ( 0, joint_torque_ );
       joints_[TILT]->SetMaxForce ( 0, joint_torque_ );
 
@@ -52,7 +59,8 @@ namespace gazebo
       alive_ = true;
 
       ros::SubscribeOptions so =
-          ros::SubscribeOptions::create<geometry_msgs::Quaternion>(command_topic_, 1,
+          ros::SubscribeOptions::create<geometry_msgs::Quaternion>
+                 (command_topic_, 1,
                   boost::bind(&H4RPanTiltGazebo::cmdDirCallback,this, _1),
                   ros::VoidPtr(), &queue_);
 
@@ -60,16 +68,16 @@ namespace gazebo
       pub_joint_=gazebo_ros_->node()->advertise<sensor_msgs::JointState>("joint_states",1000);
       callback_queue_thread_ =
           boost::thread ( boost::bind ( &H4RPanTiltGazebo::QueueThread, this ) );
+
       // Initialize update rate stuff
       if ( servo_rate_ > 0.0 ) servo_rate_ = 1.0 / servo_rate_;
       else servo_rate_ = 0.0;
       last_update_ = parent_->GetWorld()->GetSimTime();
 
-
-
       //Init joint message names
       joint_state_.name.resize ( joints_.size() );
       joint_state_.position.resize ( joints_.size() );
+
       for ( int i = 0; i < 2; i++ ) {
           physics::JointPtr joint = joints_[i];
           math::Angle angle = joint->GetAngle ( 0 );
@@ -85,9 +93,12 @@ namespace gazebo
 
     void H4RPanTiltGazebo::Update(const common::UpdateInfo & /*_info*/)
     {
-    	double secondslast_update = ( parent_->GetWorld()->GetSimTime()
-    			                             - last_update_ ).Double();
-        if ( secondslast_update > servo_rate_ ) //Do we have to update the position?
+    	double secondslast_update = (
+    	        parent_->GetWorld()->GetSimTime()
+    			- last_update_ ).Double();
+
+    	//Do we have to update the position?
+        if ( secondslast_update > servo_rate_ )
         {
         	if(pan_!=pan_target_)
     		{
@@ -136,7 +147,8 @@ namespace gazebo
     }
 
 
-    void H4RPanTiltGazebo::cmdDirCallback ( const geometry_msgs::Quaternion::ConstPtr& msg )
+    void H4RPanTiltGazebo::cmdDirCallback (
+            const geometry_msgs::Quaternion::ConstPtr& msg )
     {
     	double roll, pitch, yaw;
 
@@ -183,7 +195,8 @@ namespace gazebo
     void H4RPanTiltGazebo::QueueThread()
     {
         static const double timeout = 0.01;
-        while ( alive_ && gazebo_ros_->node()->ok() ) {
+        while ( alive_ && gazebo_ros_->node()->ok() )
+        {
             queue_.callAvailable ( ros::WallDuration ( timeout ) );
         }
     }
@@ -195,9 +208,9 @@ namespace gazebo
 
     	pan.SetFromDegree(pan_);
     	tilt.SetFromDegree(tilt_);
-      joints_[PAN]->SetAngle ( 0, pan  );
-      joints_[TILT]->SetAngle ( 0, tilt );
 
+    	joints_[PAN]->SetAngle ( 0, pan  );
+    	joints_[TILT]->SetAngle ( 0, tilt );
     }
 
 

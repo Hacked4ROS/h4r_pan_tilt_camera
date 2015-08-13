@@ -47,15 +47,15 @@ namespace gazebo
 	///Model load function (the actual constructor)
 	void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
 
-	///Update function for the model
-    void Update(const common::UpdateInfo &info);
-
     /**
      * Reset function for when the simulation is reset,
      * it resets the model to be centered in pan and tilt.
      */
     void Reset();
 
+
+    ///Update function for the model
+    void Update(const common::UpdateInfo &info);
     private:
 
     ///Pointer to model
@@ -85,9 +85,6 @@ namespace gazebo
 
 	///Joint state message
 	sensor_msgs::JointState joint_state_;
-
-	///Namespace parameter
-	std::string namespace_;
 
 	///Command topic name
 	std::string command_topic_;
