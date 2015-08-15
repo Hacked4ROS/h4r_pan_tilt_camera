@@ -132,6 +132,18 @@ namespace gazebo
         this->moveJoints();
     }
 
+    void H4RPanTiltGazebo::moveJoints()
+    {
+        math::Angle pan;
+        math::Angle tilt;
+
+        pan.SetFromDegree(pan_);
+        tilt.SetFromDegree(tilt_);
+
+        joints_[PAN]->SetAngle ( 0, pan  );
+        joints_[TILT]->SetAngle ( 0, tilt );
+    }
+
     void H4RPanTiltGazebo::Reset()
     {
     	pan_=RESET_PAN_VALUE;
@@ -195,17 +207,7 @@ namespace gazebo
         }
     }
 
-    void H4RPanTiltGazebo::moveJoints()
-    {
-    	math::Angle pan;
-    	math::Angle tilt;
 
-    	pan.SetFromDegree(pan_);
-    	tilt.SetFromDegree(tilt_);
-
-    	joints_[PAN]->SetAngle ( 0, pan  );
-    	joints_[TILT]->SetAngle ( 0, tilt );
-    }
 
 
     GZ_REGISTER_MODEL_PLUGIN ( H4RPanTiltGazebo )
