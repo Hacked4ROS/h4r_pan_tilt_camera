@@ -27,9 +27,6 @@ private:
 	int pan_min, pan_max;
 	int tilt_min, tilt_max;
 
-
-	int tilt, pan;
-
 	int tilt_home, pan_home;
 
 	int axis_pan,
@@ -43,7 +40,6 @@ private:
 		button_tilt_down,
 		button_reset_lock;
 
-
 	bool button_pan_up_pressed,
 		 button_pan_down_pressed,
 	     button_tilt_up_pressed,
@@ -54,6 +50,9 @@ private:
 	bool locked;
 	bool toggle_switch;
 
+
+
+    int tilt, pan;
 	int b_rate;
 
 	boost::mutex mutexPanTilt, mutex_buttons;

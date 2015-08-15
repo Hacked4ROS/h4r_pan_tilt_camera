@@ -103,14 +103,11 @@ void PanTiltJoy::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 						}
 						else
 						{
-							if(!lock_is_switch)
-							{
-								if(toggle_switch)
-								{
-									toggle_switch=false;
-									locked=!locked;
-								}
-							}
+                            if(toggle_switch)
+                            {
+                                toggle_switch=false;
+                                locked=!locked;
+                            }
 						}
 
 						if(locked)
